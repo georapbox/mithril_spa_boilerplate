@@ -43,7 +43,7 @@
             }
         };
 
-        el.classList.remove('page-in');
+    el.classList.remove('page-in');
         setTimeout(function () {
             el.classList.add('page-out');
         });

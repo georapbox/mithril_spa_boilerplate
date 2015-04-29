@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "username": "johndoe",
+        "name": "John Doe",
+        "email": "johndoe@hotmail.com"
+    },
+    {
+        "id": 2,
+        "username": "georapbox",
+        "name": "George Raptis",
+        "email": "georapbox@gmail.com"
+    },
+    {
+        "id": 3,
+        "username": "marylou",
+        "name": "Mary Lou",
+        "email": "mlou@yahoo.com"
+    },
+    {
+        "id": 4,
+        "username": "tduncan",
+        "name": "Tim Duncan",
+        "email": "tduncan@gmail.com"
+    }
+]

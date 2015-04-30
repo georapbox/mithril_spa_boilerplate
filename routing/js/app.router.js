@@ -68,7 +68,7 @@
                 // Set an attribute to body, to use it for DOM manipulation and styling.
                 doc.body.setAttribute('data-page-name', options.name);
 
-                return new oModule.controller();
+                return oModule.controller ? new oModule.controller() : false;
             },
             view: oModule.view
         };

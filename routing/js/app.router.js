@@ -4,7 +4,7 @@
     var transitionEvent = dom.whichTransitionEvent(),
         animate = transitionEvent ?
             app.utils.animator(pageIn, pageOut, true, false) :
-            function (view) { return view; };
+            function (myModule) { return myModule; };
 
     /**
      * Animates page in view.
@@ -35,12 +35,7 @@
      */
     function pageOut(el, callback) {
         callback = function () {
-            var  next = el.nextElementSibling;
-
             el.removeEventListener(transitionEvent, callback, false);
-            if (next) {
-                el.parentNode.removeChild(next);
-            }
         };
 
         el.classList.remove('page-in');
@@ -57,20 +52,24 @@
      * @returns {object}
      */
     function router(oModule, options) {
+        var defaults = {
+            name: '',
+        };
+        options = obj.extend({}, defaults, options);
+        defaults = null;
+
         return {
             controller: function () {
-                var defaults = {
-                    name: m.route().replace(/\//g, '')
-                };
-                options = obj.extend({}, defaults, options);
-                defaults = null;
+                // Set a default name for each route, if one is not provided.
+                options.name = options.name || m.route().replace(/\//g, '');
 
                 // Set an attribute to body, to use it for DOM manipulation and styling.
                 doc.body.setAttribute('data-page-name', options.name);
 
-                return oModule.controller ? new oModule.controller() : false;
+                // Return the module's controller if available, else undefined.
+                return oModule.controller ? new oModule.controller() : undefined;
             },
-            view: oModule.view
+            view: animate(oModule).view
         };
     }
 
@@ -79,19 +78,19 @@
 
     // Define application's routes.
     m.route(doc.querySelector('m-view'), '/dashboard', {
-        '/dashboard': router(animate(pages.dashboard), {
+        '/dashboard': router(pages.dashboard, {
             name: 'dashboard'
         }),
-        '/dashboard/:userName': router(animate(pages.dashboard), {
+        '/dashboard/:userName': router(pages.dashboard, {
             name: 'dashboard'
         }),
-        '/userprofile/:userName': router(animate(pages.userprofile), {
+        '/userprofile/:userName': router(pages.userprofile, {
             name: 'userprofile'
         }),
-        '/about': router(animate(pages.about), {
+        '/about': router(pages.about, {
             name: 'about'
         }),
-        '/contact': router(animate(pages.contact), {
+        '/contact': router(pages.contact, {
             name: 'contact'
         })
     });

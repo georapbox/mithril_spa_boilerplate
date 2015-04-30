@@ -27,7 +27,6 @@ app.utils.objects = (function () {
         return arguments[0];
     }
 
-
     return {
         extend: extend
     };

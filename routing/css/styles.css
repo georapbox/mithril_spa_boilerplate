@@ -64,6 +64,15 @@ h1 {
 }
 
 /* Transitions */
+.no-anim {
+    -webkit-transition: opacity 0.000000000000000000000001s;
+    transition: opacity 0.000000000000000000000001s;
+}
+.no-anim.page-in,
+.no-anim.page-out {
+    opacity: 0;
+}
+
 .slide-rtl {
     opacity: 1;
     -webkit-transform: translateX(0);

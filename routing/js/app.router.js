@@ -4,7 +4,10 @@
     var transitionEvent = dom.whichTransitionEvent(),
         animate = transitionEvent ?
             app.utils.animator(pageIn, pageOut, true, false) :
-            function (myModule) { return myModule; };
+            function (myModule) {
+                return myModule;
+            },
+        animationClass; // Holds the class responsible for animation. TODO: Maybe use publish/subscribe patter instead.
 
     /**
      * Animates page in view.
@@ -12,6 +15,9 @@
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageIn(el, callback) {
+        /**
+         * Overrides callback function of animator.
+         */
         callback = function () {
             var next = el.nextElementSibling;
 
@@ -22,6 +28,7 @@
         };
 
         el.classList.add('page-in');
+        animationClass && el.classList.add(animationClass);
         setTimeout(function () {
             el.classList.remove('page-in');
         }, 0);
@@ -34,6 +41,9 @@
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageOut(el, callback) {
+        /**
+         * Overrides callback function of animator.
+         */
         callback = function () {
             el.removeEventListener(transitionEvent, callback, false);
         };
@@ -54,12 +64,15 @@
     function router(oModule, options) {
         var defaults = {
             name: '',
+            animClass: 'no-anim'
         };
         options = obj.extend({}, defaults, options);
         defaults = null;
 
         return {
             controller: function () {
+                animationClass = options.animClass;
+
                 // Set a default name for each route, if one is not provided.
                 options.name = options.name || m.route().replace(/\//g, '');
 
@@ -79,19 +92,24 @@
     // Define application's routes.
     m.route(doc.querySelector('m-view'), '/dashboard', {
         '/dashboard': router(pages.dashboard, {
-            name: 'dashboard'
+            name: 'dashboard',
+            animClass: 'slide-ttb'
         }),
         '/dashboard/:userName': router(pages.dashboard, {
-            name: 'dashboard'
+            name: 'dashboard',
+            animClass: 'slide-ttb'
         }),
         '/userprofile/:userName': router(pages.userprofile, {
-            name: 'userprofile'
+            name: 'userprofile',
+            animClass: 'scale'
         }),
         '/about': router(pages.about, {
-            name: 'about'
+            name: 'about',
+            animClass: 'slide-rtl'
         }),
         '/contact': router(pages.contact, {
-            name: 'contact'
+            name: 'contact',
+            animClass: 'slide-rtl'
         })
     });
 }(document, app, app.utils.dom, app.utils.objects, app.pages));

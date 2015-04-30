@@ -41,7 +41,7 @@ app.pages.userprofile = (function () {
     };
 
     userprofile.view = function (controller) {
-        return m('div.m-page.m-page--4.scale', [
+        return m('div.m-page.m-page--4', [
             userprofile.vm.user.map(function (usr, idx) {
                 return m('div', [
                     m('h2', usr.name()),

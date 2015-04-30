@@ -1,8 +1,12 @@
 {
     "browser": true,
     "devel": true,
+    "undef": true,
+    "unused": "vars",
+    "strict": true,
+    "expr": true,
     "predef": [
-        "APP",
+        "app",
         "m"
     ]
 }

@@ -12,7 +12,7 @@ app.pages.about = (function () {
             };
         },
         view: function () {
-            return m('div.m-page.m-page--2.slide-rtl', [
+            return m('div.m-page.m-page--2', [
                 m('h2', 'About page')
             ]);
         }

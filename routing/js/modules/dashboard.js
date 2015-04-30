@@ -48,7 +48,7 @@ app.pages.dashboard = (function () {
     };
 
     dashboard.view = function (controller) {
-        return m('div.m-page.m-page--1.slide-ttb', [
+        return m('div.m-page.m-page--1', [
             m('ul', [
                 dashboard.vm.users.map(function (usr, idx) {
                     return m('li', [

@@ -5,6 +5,8 @@
     "unused": "vars",
     "strict": true,
     "expr": true,
+    "node": true,
+    "browserify": true,
     "predef": [
         "app",
         "m"

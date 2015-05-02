@@ -28,6 +28,10 @@ h1 {
     height: 768px;
     overflow: hidden;
     background: #fff;
+
+    @media screen and (max-width: 650px) {
+        width: 600px;
+    }
 }
 
 .m-page {
@@ -87,17 +91,3 @@ body[data-page-name="contact"] .nav__item__link.contact {
     color: #2373c1;
     font-weight: bold;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@
  * Contact page.
  * @returns {object} The contact module.
  */
-app.pages.contact = (function () {
+module.exports = (function () {
     'use strict';
 
     var contact = {

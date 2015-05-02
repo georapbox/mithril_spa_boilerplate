@@ -1,4 +1,6 @@
-app.utils.animator = (function (dom) {
+module.exports = (function () {
+    'use strict';
+
     var animating = false; // Flag to indicate when animation is in progress.
 
     /**
@@ -89,4 +91,4 @@ app.utils.animator = (function (dom) {
 
     function noop() {}
     return animator;
-}(app.utils.dom));
+}());

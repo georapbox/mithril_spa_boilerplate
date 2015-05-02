@@ -2,7 +2,7 @@
  * About page.
  * @returns {object} The about module.
  */
-app.pages.about = (function () {
+module.exports = (function () {
     'use strict';
 
     var about = {

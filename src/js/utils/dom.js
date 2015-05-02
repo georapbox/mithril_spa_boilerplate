@@ -1,7 +1,9 @@
 /**
  * DOM utilities.
  */
-app.utils.dom = (function (doc) {
+module.exports = (function () {
+    'use strict';
+
     /**
      * Responsible to find the appropriate "transitionend" event supported by each browser.
      * If event is found, the event name is returned, else undefined.
@@ -30,4 +32,4 @@ app.utils.dom = (function (doc) {
     return {
         whichTransitionEvent: whichTransitionEvent
     };
-}(document));
+}());

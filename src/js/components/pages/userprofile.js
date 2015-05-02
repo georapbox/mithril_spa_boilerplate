@@ -2,7 +2,7 @@
  * User Profile page.
  * @returns {object} The userprofile module.
  */
-app.pages.userprofile = (function () {
+module.exports = (function () {
     'use strict';
 
     var User = function (data) {

@@ -2,7 +2,7 @@
  * Dashboard page.
  * @returns {object} The dashboard module.
  */
-app.pages.dashboard = (function () {
+module.exports = (function () {
     'use strict';
 
     var User = function (data) {

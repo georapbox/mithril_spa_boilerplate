@@ -1,4 +1,8 @@
-(function (doc) {
+/**
+ * Main navigation component.
+ * @returns {object} The nav module.
+ */
+module.exports = (function (doc) {
     'use strict';
 
     var nav = {
@@ -19,5 +23,9 @@
         }
     };
 
-    m.render(doc.getElementById('js_nav'), nav.view());
+    return {
+        render: function () {
+            m.render(doc.getElementById('js_nav'), nav.view());
+        }
+    };
 }(document));

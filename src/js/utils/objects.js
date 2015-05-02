@@ -1,7 +1,9 @@
 /**
  * Objects utilities.
  */
-app.utils.objects = (function () {
+module.exports = (function () {
+    'use strict';
+
     /**
      * Merges (deep copy) the contents of two or more objects together into the first object.
      * @param {Object} target The object to extend. It will receive the new properties.
@@ -10,8 +12,6 @@ app.utils.objects = (function () {
      * @use extend({}, obj1, objN)
     */
     function extend() {
-        'use strict';
-
         for (var i = 1, l = arguments.length; i < l; i++) {
             for (var key in arguments[i]) {
                 if (arguments[i].hasOwnProperty(key)) {
@@ -30,4 +30,4 @@ app.utils.objects = (function () {
     return {
         extend: extend
     };
-}(document));
+}());

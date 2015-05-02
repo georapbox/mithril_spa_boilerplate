@@ -1,4 +1,4 @@
-(function (doc, app, dom, obj, pages) {
+module.exports = (function (doc, app, dom, obj, pages) {
     'use strict';
 
     var transitionEvent = dom.whichTransitionEvent(),
@@ -86,30 +86,34 @@
         };
     }
 
-    // Configure routing mode.
-    m.route.mode = 'hash';
+    return {
+        init: function () {
+            // Configure routing mode.
+            m.route.mode = 'hash';
 
-    // Define application's routes.
-    m.route(doc.querySelector('m-view'), '/dashboard', {
-        '/dashboard': router(pages.dashboard, {
-            name: 'dashboard',
-            animClass: 'slide-ttb'
-        }),
-        '/dashboard/:userName': router(pages.dashboard, {
-            name: 'dashboard',
-            animClass: 'slide-ttb'
-        }),
-        '/userprofile/:userName': router(pages.userprofile, {
-            name: 'userprofile',
-            animClass: 'scale'
-        }),
-        '/about': router(pages.about, {
-            name: 'about',
-            animClass: 'slide-rtl'
-        }),
-        '/contact': router(pages.contact, {
-            name: 'contact',
-            animClass: 'slide-rtl'
-        })
-    });
+            // Define application's routes.
+            m.route(doc.querySelector('m-view'), '/dashboard', {
+                '/dashboard': router(pages.dashboard, {
+                    name: 'dashboard',
+                    animClass: 'slide-ttb'
+                }),
+                '/dashboard/:userName': router(pages.dashboard, {
+                    name: 'dashboard',
+                    animClass: 'slide-ttb'
+                }),
+                '/userprofile/:userName': router(pages.userprofile, {
+                    name: 'userprofile',
+                    animClass: 'scale'
+                }),
+                '/about': router(pages.about, {
+                    name: 'about',
+                    animClass: 'slide-rtl'
+                }),
+                '/contact': router(pages.contact, {
+                    name: 'contact',
+                    animClass: 'slide-rtl'
+                })
+            });
+        }
+    };
 }(document, app, app.utils.dom, app.utils.objects, app.pages));

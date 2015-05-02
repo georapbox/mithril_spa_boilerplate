@@ -34,8 +34,14 @@ h1 {
   overflow: hidden;
   background: #fff;
 }
+@media screen and (max-width: 650px) {
+  /* line 23, ../sass/styles.scss */
+  .m-window {
+    width: 600px;
+  }
+}
 
-/* line 33, ../sass/styles.scss */
+/* line 37, ../sass/styles.scss */
 .m-page {
   position: absolute;
   top: 130px;
@@ -47,55 +53,55 @@ h1 {
   background: #ccc;
 }
 
-/* line 44, ../sass/styles.scss */
+/* line 48, ../sass/styles.scss */
 .m-page--1 {
   background-color: dodgerblue;
 }
 
-/* line 47, ../sass/styles.scss */
+/* line 51, ../sass/styles.scss */
 .m-page--1 ul {
   margin: 0 0 15px 15px;
 }
 
-/* line 50, ../sass/styles.scss */
+/* line 54, ../sass/styles.scss */
 .m-page--1 a {
   color: #fff;
 }
 
-/* line 54, ../sass/styles.scss */
+/* line 58, ../sass/styles.scss */
 .m-page--2 {
   background-color: coral;
 }
 
-/* line 58, ../sass/styles.scss */
+/* line 62, ../sass/styles.scss */
 .m-page--3 {
   background-color: darkolivegreen;
 }
 
-/* line 62, ../sass/styles.scss */
+/* line 66, ../sass/styles.scss */
 .m-page--4 {
   background-color: darkmagenta;
 }
 
 /* Navigation */
-/* line 68, ../sass/styles.scss */
+/* line 72, ../sass/styles.scss */
 .nav {
   margin-left: 25px;
 }
 
-/* line 72, ../sass/styles.scss */
+/* line 76, ../sass/styles.scss */
 .nav--sub {
   margin-left: 15px;
 }
 
-/* line 76, ../sass/styles.scss */
+/* line 80, ../sass/styles.scss */
 .nav__item__link,
 .nav__item__link:visited {
   color: dodgerblue;
   text-decoration: none;
 }
 
-/* line 83, ../sass/styles.scss */
+/* line 87, ../sass/styles.scss */
 body[data-page-name^="dashboard"] .nav__item__link.dashboard,
 body[data-page-name="about"] .nav__item__link.about,
 body[data-page-name="contact"] .nav__item__link.contact {

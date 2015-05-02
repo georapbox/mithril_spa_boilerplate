@@ -1,27 +1,30 @@
 /* jshint ignore:start */
-var gulp = require('gulp');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var streamify = require('gulp-streamify');
-var uglify = require('gulp-uglify');
-var compass = require('gulp-compass');
-var minifyCss = require('gulp-minify-css');
+var gulp = require('gulp'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    streamify = require('gulp-streamify'),
+    uglify = require('gulp-uglify'),
+    compass = require('gulp-compass'),
+    minifyCss = require('gulp-minify-css');
 
 
 /**
- * ---------------------------
- * FOR DEVELOPMENT ENVIRONMENT
- * ---------------------------
+ * ---------------------------------
+ * TASKS FOR DEVELOPMENT ENVIRONMENT
+ * ---------------------------------
  */
 gulp.task('browserify', function () {
-    return browserify('./src/js/app.init.js', { debug: true }).
-        bundle().
-        pipe(source('bundle.js')).
-        pipe(gulp.dest('src/js'));
+    return browserify('./src/js/main.js', {
+        debug: true
+    }).
+    bundle().
+    pipe(source('bundle.js')).
+    pipe(gulp.dest('src/js'));
 });
 
 gulp.task('compass', function() {
-    gulp.src('src/sass/bundle.scss').
+    gulp.
+        src('src/sass/bundle.scss').
         pipe(compass({
             config_file: './config.rb',
             css: 'src/css',
@@ -41,9 +44,9 @@ gulp.task('watch', function () {
 
 
 /**
- * --------------------------
- * FOR PRODUCTION ENVIRONMENT
- * --------------------------
+ * --------------------------------
+ * TASKS FOR PRODUCTION ENVIRONMENT
+ * --------------------------------
  */
 gulp.task('copy', function () {
     gulp.

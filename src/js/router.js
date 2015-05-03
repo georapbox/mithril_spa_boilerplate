@@ -1,4 +1,4 @@
-module.exports = (function (doc, app, dom, obj, pages) {
+module.exports = (function (doc, app, dom, obj) {
     'use strict';
 
     var transitionEvent = dom.whichTransitionEvent(),
@@ -86,11 +86,15 @@ module.exports = (function (doc, app, dom, obj, pages) {
         };
     }
 
-    return {
-        init: function () {
-            // Configure routing mode.
-            m.route.mode = 'hash';
+    // Configure routing mode.
+    m.route.mode = 'hash';
 
+    return {
+        /**
+         * Initialize application's router.
+         * @param {object} pages
+         */
+        init: function (pages) {
             // Define application's routes.
             m.route(doc.querySelector('m-view'), '/dashboard', {
                 '/dashboard': router(pages.dashboard, {
@@ -116,4 +120,4 @@ module.exports = (function (doc, app, dom, obj, pages) {
             });
         }
     };
-}(document, app, app.utils.dom, app.utils.objects, app.pages));
+}(document, app, app.utils.dom, app.utils.objects));

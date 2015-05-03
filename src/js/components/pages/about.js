@@ -15,7 +15,9 @@ module.exports = (function () {
             return m('div.m-page.m-page--2', [
                 m('h2', {
                     config: about.vm.clickMe
-                }, m.trust('About page <span style="font-size:14px;">(click me)</span>'))
+                }, m.trust('About page <span style="font-size:14px;">(click me)</span>')),
+                m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+                m('a[href="/contact"]', { config: m.route }, 'Contact us')
             ]);
         }
     };

@@ -41,7 +41,7 @@ module.exports = (function () {
     };
 
     userprofile.view = function (controller) {
-        return m('div.m-page.m-page--4', [
+        return m('div.m-page', [
             userprofile.vm.user.map(function (usr, idx) {
                 return m('div', [
                     m('h2', usr.name()),

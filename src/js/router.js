@@ -21,6 +21,7 @@ module.exports = (function (doc, app, dom, obj) {
         callback = function () {
             var next = el.nextElementSibling;
 
+            doc.body.classList.remove('no-actions');
             el.removeEventListener(transitionEvent, callback, false);
             if (next) {
                 el.parentNode.removeChild(next);
@@ -28,6 +29,7 @@ module.exports = (function (doc, app, dom, obj) {
         };
 
         el.classList.add('page-in');
+        doc.body.classList.add('no-actions');
         animationClass && el.classList.add(animationClass);
         setTimeout(function () {
             el.classList.remove('page-in');
@@ -52,6 +54,7 @@ module.exports = (function (doc, app, dom, obj) {
         setTimeout(function () {
             el.classList.add('page-out');
         });
+
         el.addEventListener(transitionEvent, callback, false);
     }
 
@@ -64,7 +67,7 @@ module.exports = (function (doc, app, dom, obj) {
     function router(oModule, options) {
         var defaults = {
             name: '',
-            animClass: 'no-anim'
+            animClass: 'fade'
         };
         options = obj.extend({}, defaults, options);
         defaults = null;
@@ -107,7 +110,7 @@ module.exports = (function (doc, app, dom, obj) {
                 }),
                 '/userprofile/:userName': router(pages.userprofile, {
                     name: 'userprofile',
-                    animClass: 'scale'
+                    animClass: 'fade'
                 }),
                 '/about': router(pages.about, {
                     name: 'about',

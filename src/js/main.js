@@ -17,8 +17,8 @@
         }
     };
 
-    var router = require('./router');
-    var nav = require('./components/nav');
+    var router = require('./router'),
+        nav = require('./components/nav');
 
     router.init();
     nav.render();

@@ -11,7 +11,7 @@ module.exports = (function () {
 
     modal.view = function (header, body, footer) {
         return modal.visible() ?
-            m('div.modal.fadein', [
+            m('div.modal', { config: modal.vm.fadeIn }, [
                 m('div.modal-dialog', [
                     m('div.modal-content', [
                         m('div.modal-header', [
@@ -24,6 +24,17 @@ module.exports = (function () {
                 ])
             ]) :
             '';
+    };
+
+    modal.vm = {
+        fadeIn: function (element) {
+            setTimeout(function () {
+                element.classList.add('fadein');
+            }, 0);
+        },
+        say: function () {
+            alert('asdasd');
+        }
     };
 
     return modal;

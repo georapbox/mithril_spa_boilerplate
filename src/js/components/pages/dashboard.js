@@ -48,7 +48,7 @@ module.exports = (function () {
     };
 
     dashboard.view = function (controller) {
-        return m('div.m-page.m-page--1', [
+        return m('div.m-page', [
             m('ul', [
                 dashboard.vm.users.map(function (usr, idx) {
                     return m('li', [

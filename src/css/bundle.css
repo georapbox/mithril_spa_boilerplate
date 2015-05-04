@@ -14,8 +14,8 @@ html, body {
 body {
   font-family: Arial, Helvetica, sans-serif;
   color: #333;
-  background: #333;
-  overflow: hidden;
+  background: #fff;
+  overflow-x: hidden;
 }
 
 /* line 18, ../sass/styles.scss */
@@ -30,34 +30,33 @@ h1 {
 }
 
 /* line 27, ../sass/styles.scss */
-.m-window {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #fff;
-}
-
-/* line 37, ../sass/styles.scss */
 .m-page {
   position: absolute;
-  top: 100px;
+  top: 60px;
   left: 0;
   width: 100%;
-  height: calc(100% - 100px);
   padding: 15px;
   box-sizing: border-box;
-  overflow: auto;
   background: #fff;
 }
-/* line 48, ../sass/styles.scss */
+/* line 36, ../sass/styles.scss */
 .m-page ul {
   margin-left: 15px;
 }
 
 /* Navigation */
+/* line 43, ../sass/styles.scss */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  padding: 18px 5px 0 5px;
+  z-index: 2;
+  background: #fff;
+}
+
 /* line 55, ../sass/styles.scss */
 body[data-page-name^="dashboard"] .nav > li.dashboard a,
 body[data-page-name="about"] .nav > li.about a,
@@ -74,8 +73,24 @@ body[data-page-name="contact"] .nav > li.contact a {
  * @package Transitions
  * Define all page transitions types.
  */
-/* Slide right to left */
+/* Default transition */
 /* line 7, ../sass/transitions.scss */
+.default {
+  opacity: 1;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* line 11, ../sass/transitions.scss */
+.default.page-in,
+.default.page-out {
+  opacity: 0;
+}
+
+/* Slide right to left */
+/* line 17, ../sass/transitions.scss */
 .slide-rtl {
   opacity: 1;
   -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
@@ -84,7 +99,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
-/* line 11, ../sass/transitions.scss */
+/* line 21, ../sass/transitions.scss */
 .slide-rtl.page-in {
   opacity: 0;
   -moz-transform: translateX(100%);
@@ -93,7 +108,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transform: translateX(100%);
 }
 
-/* line 15, ../sass/transitions.scss */
+/* line 25, ../sass/transitions.scss */
 .slide-rtl.page-out {
   opacity: 0;
   -moz-transform: translateX(-100%);
@@ -103,7 +118,7 @@ body[data-page-name="contact"] .nav > li.contact a {
 }
 
 /* Slide top to bottom */
-/* line 21, ../sass/transitions.scss */
+/* line 31, ../sass/transitions.scss */
 .slide-ttb {
   opacity: 1;
   -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
@@ -112,7 +127,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
-/* line 25, ../sass/transitions.scss */
+/* line 35, ../sass/transitions.scss */
 .slide-ttb.page-in {
   opacity: 0;
   -moz-transform: translateY(0);
@@ -121,7 +136,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transform: translateY(0);
 }
 
-/* line 29, ../sass/transitions.scss */
+/* line 39, ../sass/transitions.scss */
 .slide-ttb.page-out {
   opacity: 0;
   -moz-transform: translateY(100%);
@@ -131,7 +146,7 @@ body[data-page-name="contact"] .nav > li.contact a {
 }
 
 /* Fade in-out */
-/* line 35, ../sass/transitions.scss */
+/* line 45, ../sass/transitions.scss */
 .fade {
   opacity: 1;
   -moz-transition: opacity 0.6s ease-in-out;
@@ -140,14 +155,14 @@ body[data-page-name="contact"] .nav > li.contact a {
   transition: opacity 0.6s ease-in-out;
 }
 
-/* line 39, ../sass/transitions.scss */
+/* line 49, ../sass/transitions.scss */
 .fade.page-in,
 .fade.page-out {
   opacity: 0;
 }
 
 /* Scale in-out */
-/* line 45, ../sass/transitions.scss */
+/* line 55, ../sass/transitions.scss */
 .scale {
   -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
   -o-transition: -o-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
@@ -155,7 +170,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
-/* line 48, ../sass/transitions.scss */
+/* line 58, ../sass/transitions.scss */
 .scale.page-in {
   opacity: 0;
   -moz-transform: scale(0);
@@ -164,7 +179,7 @@ body[data-page-name="contact"] .nav > li.contact a {
   transform: scale(0);
 }
 
-/* line 52, ../sass/transitions.scss */
+/* line 62, ../sass/transitions.scss */
 .scale.page-out {
   opacity: 0;
   -moz-transform: scale(0);
@@ -178,15 +193,35 @@ body[data-page-name="contact"] .nav > li.contact a {
   display: block;
   color: #333;
   background: rgba(0, 0, 0, 0.6);
-  -moz-transition: opacity 0.35s ease;
-  -o-transition: opacity 0.35s ease;
-  -webkit-transition: opacity 0.35s ease;
-  transition: opacity 0.35s ease;
   opacity: 0;
+  -moz-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
+  -webkit-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 /* line 8, ../sass/modal.scss */
 .modal.fadein {
   opacity: 1;
+}
+/* line 11, ../sass/modal.scss */
+.modal.fadein .modal-dialog {
+  opacity: 1;
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+/* line 17, ../sass/modal.scss */
+.modal-dialog {
+  opacity: 0;
+  -moz-transition: -moz-transform 0.6s ease, opacity 0.6s ease;
+  -o-transition: -o-transform 0.6s ease, opacity 0.6s ease;
+  -webkit-transition: -webkit-transform 0.6s ease, opacity 0.6s ease;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  -moz-transform: translateY(-100px);
+  -ms-transform: translateY(-100px);
+  -webkit-transform: translateY(-100px);
+  transform: translateY(-100px);
 }
 
 /*# sourceMappingURL=bundle.css.map */

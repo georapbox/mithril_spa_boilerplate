@@ -31,10 +31,11 @@ module.exports = (function (doc, app, dom, obj) {
         el.classList.add('page-in');
         doc.body.classList.add('no-actions');
         animationClass && el.classList.add(animationClass);
+        el.addEventListener(transitionEvent, callback, false);
+
         setTimeout(function () {
             el.classList.remove('page-in');
         }, 0);
-        el.addEventListener(transitionEvent, callback, false);
     }
 
     /**
@@ -51,11 +52,11 @@ module.exports = (function (doc, app, dom, obj) {
         };
 
         el.classList.remove('page-in');
+        el.addEventListener(transitionEvent, callback, false);
+
         setTimeout(function () {
             el.classList.add('page-out');
         });
-
-        el.addEventListener(transitionEvent, callback, false);
     }
 
     /**
@@ -67,7 +68,7 @@ module.exports = (function (doc, app, dom, obj) {
     function router(oModule, options) {
         var defaults = {
             name: '',
-            animClass: 'fade'
+            animClass: 'default'
         };
         options = obj.extend({}, defaults, options);
         defaults = null;

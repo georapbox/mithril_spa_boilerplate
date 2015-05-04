@@ -3,6 +3,16 @@
  * Define all page transitions types.
  */
 
+/* Default transition */
+.default {
+    opacity: 1;
+    @include transition(opacity 0.2s ease-in-out);
+}
+.default.page-in,
+.default.page-out {
+    opacity: 0;
+}
+
 /* Slide right to left */
 .slide-rtl {
     opacity: 1;

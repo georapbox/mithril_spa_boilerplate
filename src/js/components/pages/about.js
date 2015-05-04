@@ -18,16 +18,29 @@ module.exports = (function () {
                 m('h2', {
                     config: about.vm.clickMe
                 }, m.trust('About page <span style="font-size:14px;">(click me)</span>')),
+
                 m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+
                 m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+
                 m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+
                 m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
-                m('a.btn.btn-primary', {onclick: modal.visible.bind(this, true)}, 'Show modal'),
+
+                m('a.btn.btn-primary', {
+                    onclick: modal.visible.bind(this, true)
+                }, 'Show modal'),
 
                 modal.view(function () {
-                    return m('h4.modal-title', 'modal title goes here');
+                    return m('h4.modal-title', 'Lorem ipsum');
                 }, function () {
-                    return m('p', 'modal content goes here');
+                    return m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?');
+                }, function () {
+                    return m('.modal-footer', [
+                        m('a.btn.btn-default', {
+                            onclick: modal.visible.bind(this, false)
+                        }, 'Close')
+                    ]);
                 })
             ]);
         }

@@ -18,7 +18,7 @@ module.exports = (function () {
                             m('a.close', {onclick: modal.visible.bind(this, false)}, m.trust('&times;')),
                             header && header()
                         ]),
-                        m('div.modal-body', body()),
+                        m('div.modal-body', body && body()),
                         footer && footer()
                     ])
                 ])
@@ -31,9 +31,6 @@ module.exports = (function () {
             setTimeout(function () {
                 element.classList.add('fadein');
             }, 0);
-        },
-        say: function () {
-            alert('asdasd');
         }
     };
 

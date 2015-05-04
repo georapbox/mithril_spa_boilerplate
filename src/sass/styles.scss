@@ -11,8 +11,8 @@ html, body {
 body {
 	font-family: Arial, Helvetica, sans-serif;
     color: #333;
-    background: #333;
-    overflow: hidden;
+    background: #fff;
+    overflow-x: hidden;
 }
 
 .no-actions {
@@ -24,25 +24,13 @@ h1 {
 	padding: 0 15px;
 }
 
-.m-window {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #fff;
-}
-
 .m-page {
     position: absolute;
-    top: 100px;
+    top: 60px;
     left: 0;
     width: 100%;
-    height: calc(100% - 100px);
     padding: 15px;
     box-sizing: border-box;
-    overflow: auto;
     background: #fff;
 
     ul {
@@ -52,6 +40,18 @@ h1 {
 
 
 /* Navigation */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    padding: 18px 5px 0 5px;
+    z-index: 2;
+    background: #fff;
+
+}
+
 body[data-page-name^="dashboard"] .nav > li.dashboard a,
 body[data-page-name="about"] .nav > li.about a,
 body[data-page-name="contact"] .nav > li.contact a {

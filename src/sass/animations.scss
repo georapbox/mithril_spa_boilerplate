@@ -1,0 +1,174 @@
+/**
+ * @package Animations
+ * Define all page transitions types.
+ */
+
+/**
+ * Slide in - Left to right
+ * ------------------------
+ */
+@include keyframes(slide-in-ltr) {
+	from {
+		opacity: 0;
+		@include transform(translateX(-100%));
+	}
+	to {
+		opacity: 1;
+		@include transform(translateX(0));
+	}
+}
+
+@include keyframes(slide-out-ltr) {
+	from {
+		opacity: 1;
+		@include transform(translateX(0));
+	}
+	to {
+		opacity: 0;
+		@include transform(translateX(100%));
+	}
+}
+
+.pt-slide-ltr {
+	@include animation(slide-in-ltr 0.6s ease-in-out);
+
+	&.page-out {
+		@include animation(slide-out-ltr 0.6s ease-in-out);
+	}
+}
+
+
+/**
+ * Slide in - Right to left
+ * ------------------------
+ */
+@include keyframes(slide-in-rtl) {
+	from {
+		opacity: 0;
+		@include transform(translateX(100%));
+	}
+	to {
+		opacity: 1;
+		@include transform(translateX(0));
+	}
+}
+
+@include keyframes(slide-out-rtl) {
+	from {
+		opacity: 1;
+		@include transform(translateX(0));
+	}
+	to {
+		opacity: 0;
+		@include transform(translateX(-100%));
+	}
+}
+
+.pt-slide-rtl {
+	@include animation(slide-in-rtl 0.6s ease-in-out);
+
+	&.page-out {
+		@include animation(slide-out-rtl 0.6s ease-in-out);
+	}
+}
+
+
+/**
+ * Slide in - Top to bottom
+ * ------------------------
+ */
+@include keyframes(slide-in-ttb) {
+	from {
+		opacity: 0;
+		@include transform(translateY(-100%));
+	}
+	to {
+		opacity: 1;
+		@include transform(translateY(0));
+	}
+}
+
+@include keyframes(slide-out-ttb) {
+	from {
+		opacity: 1;
+		@include transform(translateY(0));
+	}
+	to {
+		opacity: 0;
+		@include transform(translateY(100%));
+	}
+}
+
+.pt-slide-ttb {
+	@include animation(slide-in-ttb 0.6s ease-in-out);
+
+	&.page-out {
+		@include animation(slide-out-ttb 0.6s ease-in-out);
+	}
+}
+
+
+/**
+ * Slide in - Bottom to top
+ * ------------------------
+ */
+@include keyframes(slide-in-btt) {
+	from {
+		opacity: 0;
+		@include transform(translateY(100%));
+	}
+	to {
+		opacity: 1;
+		@include transform(translateY(0));
+	}
+}
+
+@include keyframes(slide-out-btt) {
+	from {
+		opacity: 1;
+		@include transform(translateY(0));
+	}
+	to {
+		opacity: 0;
+		@include transform(translateY(-100%));
+	}
+}
+
+.pt-slide-btt {
+	@include animation(slide-in-btt 0.6s ease-in-out);
+
+	&.page-out {
+		@include animation(slide-out-btt 0.6s ease-in-out);
+	}
+}
+
+
+/**
+ * Fade in-out
+ * -----------
+ */
+@include keyframes(fade-in) {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@include keyframes(fade-out) {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+.pt-fade {
+	@include animation(fade-in 0.6s ease-in-out);
+
+	&.page-out {
+		@include animation(fade-out 0.6s ease-in-out);
+	}
+}

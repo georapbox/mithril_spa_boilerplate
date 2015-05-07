@@ -55,14 +55,3 @@ module.exports = (function () {
 
     return userprofile;
 }());
-
-
-
-
-
-
-
-
-
-
-

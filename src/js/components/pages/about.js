@@ -5,46 +5,49 @@
 module.exports = (function () {
     'use strict';
 
-    var modal = require('../../components/modal.js');
+    var modal = new app.components.Modal();
 
-    var about = {
-        controller: function () {
-            this.onunload = function () {
-                modal.visible(false);
-            };
-        },
-        view: function () {
-            return m('div.m-page', [
-                m('h2', {
-                    config: about.vm.clickMe
-                }, m.trust('About page <span style="font-size:14px;">(click me)</span>')),
+    var about = {};
 
-                m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+	about.controller = function () {
+		this.onunload = function () {
+			modal.hide();
+		};
+	};
 
-                m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+	about.view = function () {
+		return m('div.m-page', [
+			m('h2', {
+				config: about.vm.clickMe
+			}, m.trust('About page <span style="font-size:14px;">(click me)</span>')),
 
-                m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+			m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
 
-                m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+			m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
 
-                m('a.btn.btn-primary', {
-                    onclick: modal.visible.bind(this, true)
-                }, 'Show modal'),
+			m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
 
-                modal.view(function () {
-                    return m('h4.modal-title', 'Lorem ipsum');
-                }, function () {
-                    return m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?');
-                }, function () {
-                    return m('.modal-footer', [
-                        m('a.btn.btn-default', {
-                            onclick: modal.visible.bind(this, false)
-                        }, 'Close')
-                    ]);
-                })
-            ]);
-        }
-    };
+			m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
+
+			m('a.btn.btn-primary', {
+				onclick: modal.show.bind(modal)
+			}, 'Show modal'),
+
+			modal.view({
+				header: function () {
+					return m('h4.modal-title', 'Lorem ipsum');
+				},
+				body: function () {
+					return m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?');
+				},
+				footer: function () {
+					return m('a.btn.btn-default', {
+						onclick: modal.hide.bind(modal)
+					}, 'Close');
+				}
+			})
+		]);
+	};
 
     about.vm = {
         clickMe: function (element, isInitialized, context, vdom) {

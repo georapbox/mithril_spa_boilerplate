@@ -26,7 +26,7 @@ module.exports = (function () {
                 return {
                     controller: x.controller || noop,
                     view: function animatedView (ctrl) {
-                        return bindConfigTo(x.view( ctrl));
+                        return bindConfigTo(x.view(ctrl));
                     }
                 };
             }
@@ -81,7 +81,7 @@ module.exports = (function () {
                     parent.insertBefore(insertion, reference);
                     outgoing(insertion, function destroy () {
                         if (parent.contains(insertion)) {
-                            parent.removeChild(insertion);
+							parent.removeChild(insertion);
                         }
                     }, context);
                 }
@@ -89,6 +89,8 @@ module.exports = (function () {
         };
     };
 
-    function noop() {}
+    function noop() {
+		console.log('3');
+	}
     return animator;
 }());

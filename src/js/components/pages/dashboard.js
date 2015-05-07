@@ -51,7 +51,7 @@ module.exports = (function () {
         return m('div.m-page', [
             m('ul', [
                 dashboard.vm.users.map(function (usr, idx) {
-                    return m('li', [
+                    return m('li', {key: usr.id}, [
                         m('a[href="/dashboard/' + usr.username() + '"]', { config: m.route }, usr.name())
                     ]);
                 })
@@ -65,19 +65,3 @@ module.exports = (function () {
 
     return dashboard;
 }());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

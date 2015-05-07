@@ -8,16 +8,19 @@
             dom: require('./utils/dom'),
             objects: require('./utils/objects'),
             animator: require('./utils/animator')
-        }
+        },
+		components: {
+			Modal: require('./components/modal')
+		}
     };
 
-    var router = require('./router'),
-        nav = require('./components/nav');
-
+    var router = require('./router');
     router.init({
         dashboard: require('./components/pages/dashboard'),
         userprofile: require('./components/pages/userprofile'),
         about: require('./components/pages/about'),
-        contact: require('./components/pages/contact')
+        contacts: require('./components/pages/contacts')
     });
+
+	win.app.components.nav = require('./components/nav');
 }(window));

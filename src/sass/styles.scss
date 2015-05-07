@@ -15,6 +15,10 @@ body {
     overflow-x: hidden;
 }
 
+.clear {
+	clear: both;
+}
+
 .no-actions {
     pointer-events: none;
 }
@@ -38,7 +42,6 @@ h1 {
     }
 }
 
-
 /* Navigation */
 .nav {
     position: fixed;
@@ -54,7 +57,7 @@ h1 {
 
 body[data-page-name^="dashboard"] .nav > li.dashboard a,
 body[data-page-name="about"] .nav > li.about a,
-body[data-page-name="contact"] .nav > li.contact a {
+body[data-page-name="contacts"] .nav > li.contact a {
     border: 1px solid #ddd;
     border-bottom-color: transparent;
     color: #555;

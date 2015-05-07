@@ -8987,17 +8987,22 @@ body {
 }
 
 /* line 18, ../sass/styles.scss */
+.clear {
+  clear: both;
+}
+
+/* line 22, ../sass/styles.scss */
 .no-actions {
   pointer-events: none;
 }
 
-/* line 22, ../sass/styles.scss */
+/* line 26, ../sass/styles.scss */
 h1 {
   font-size: 1.50em;
   padding: 0 15px;
 }
 
-/* line 27, ../sass/styles.scss */
+/* line 31, ../sass/styles.scss */
 .m-page {
   position: absolute;
   top: 60px;
@@ -9007,13 +9012,13 @@ h1 {
   box-sizing: border-box;
   background: #fff;
 }
-/* line 36, ../sass/styles.scss */
+/* line 40, ../sass/styles.scss */
 .m-page ul {
   margin-left: 15px;
 }
 
 /* Navigation */
-/* line 43, ../sass/styles.scss */
+/* line 46, ../sass/styles.scss */
 .nav {
   position: fixed;
   top: 0;
@@ -9025,10 +9030,10 @@ h1 {
   background: #fff;
 }
 
-/* line 55, ../sass/styles.scss */
+/* line 58, ../sass/styles.scss */
 body[data-page-name^="dashboard"] .nav > li.dashboard a,
 body[data-page-name="about"] .nav > li.about a,
-body[data-page-name="contact"] .nav > li.contact a {
+body[data-page-name="contacts"] .nav > li.contact a {
   border: 1px solid #ddd;
   border-bottom-color: transparent;
   color: #555;
@@ -9038,122 +9043,460 @@ body[data-page-name="contact"] .nav > li.contact a {
 }
 
 /**
- * @package Transitions
+ * @package Animations
  * Define all page transitions types.
  */
-/* Default transition */
-/* line 7, ../sass/transitions.scss */
-.default {
-  opacity: 1;
-  -moz-transition: opacity 0.2s ease-in-out;
-  -o-transition: opacity 0.2s ease-in-out;
-  -webkit-transition: opacity 0.2s ease-in-out;
-  transition: opacity 0.2s ease-in-out;
+/**
+ * Slide in - Left to right
+ * ------------------------
+ */
+@-moz-keyframes slide-in-ltr {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes slide-in-ltr {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes slide-in-ltr {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes slide-out-ltr {
+  from {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes slide-out-ltr {
+  from {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+@keyframes slide-out-ltr {
+  from {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+/* line 32, ../sass/animations.scss */
+.pt-slide-ltr {
+  -moz-animation: slide-in-ltr 0.6s ease-in-out;
+  -webkit-animation: slide-in-ltr 0.6s ease-in-out;
+  animation: slide-in-ltr 0.6s ease-in-out;
+}
+/* line 35, ../sass/animations.scss */
+.pt-slide-ltr.page-out {
+  -moz-animation: slide-out-ltr 0.6s ease-in-out;
+  -webkit-animation: slide-out-ltr 0.6s ease-in-out;
+  animation: slide-out-ltr 0.6s ease-in-out;
 }
 
-/* line 11, ../sass/transitions.scss */
-.default.page-in,
-.default.page-out {
-  opacity: 0;
+/**
+ * Slide in - Right to left
+ * ------------------------
+ */
+@-moz-keyframes slide-in-rtl {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes slide-in-rtl {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes slide-in-rtl {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes slide-out-rtl {
+  from {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes slide-out-rtl {
+  from {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+@keyframes slide-out-rtl {
+  from {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+/* line 67, ../sass/animations.scss */
+.pt-slide-rtl {
+  -moz-animation: slide-in-rtl 0.6s ease-in-out;
+  -webkit-animation: slide-in-rtl 0.6s ease-in-out;
+  animation: slide-in-rtl 0.6s ease-in-out;
+}
+/* line 70, ../sass/animations.scss */
+.pt-slide-rtl.page-out {
+  -moz-animation: slide-out-rtl 0.6s ease-in-out;
+  -webkit-animation: slide-out-rtl 0.6s ease-in-out;
+  animation: slide-out-rtl 0.6s ease-in-out;
 }
 
-/* Slide right to left */
-/* line 17, ../sass/transitions.scss */
-.slide-rtl {
-  opacity: 1;
-  -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -o-transition: -o-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -webkit-transition: -webkit-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+/**
+ * Slide in - Top to bottom
+ * ------------------------
+ */
+@-moz-keyframes slide-in-ttb {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes slide-in-ttb {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-ttb {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-moz-keyframes slide-out-ttb {
+  from {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes slide-out-ttb {
+  from {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+}
+@keyframes slide-out-ttb {
+  from {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+}
+/* line 102, ../sass/animations.scss */
+.pt-slide-ttb {
+  -moz-animation: slide-in-ttb 0.6s ease-in-out;
+  -webkit-animation: slide-in-ttb 0.6s ease-in-out;
+  animation: slide-in-ttb 0.6s ease-in-out;
+}
+/* line 105, ../sass/animations.scss */
+.pt-slide-ttb.page-out {
+  -moz-animation: slide-out-ttb 0.6s ease-in-out;
+  -webkit-animation: slide-out-ttb 0.6s ease-in-out;
+  animation: slide-out-ttb 0.6s ease-in-out;
 }
 
-/* line 21, ../sass/transitions.scss */
-.slide-rtl.page-in {
-  opacity: 0;
-  -moz-transform: translateX(100%);
-  -ms-transform: translateX(100%);
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
+/**
+ * Slide in - Bottom to top
+ * ------------------------
+ */
+@-moz-keyframes slide-in-btt {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes slide-in-btt {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes slide-in-btt {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-moz-keyframes slide-out-btt {
+  from {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes slide-out-btt {
+  from {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+@keyframes slide-out-btt {
+  from {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+/* line 137, ../sass/animations.scss */
+.pt-slide-btt {
+  -moz-animation: slide-in-btt 0.6s ease-in-out;
+  -webkit-animation: slide-in-btt 0.6s ease-in-out;
+  animation: slide-in-btt 0.6s ease-in-out;
+}
+/* line 140, ../sass/animations.scss */
+.pt-slide-btt.page-out {
+  -moz-animation: slide-out-btt 0.6s ease-in-out;
+  -webkit-animation: slide-out-btt 0.6s ease-in-out;
+  animation: slide-out-btt 0.6s ease-in-out;
 }
 
-/* line 25, ../sass/transitions.scss */
-.slide-rtl.page-out {
-  opacity: 0;
-  -moz-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+/**
+ * Fade in-out
+ * -----------
+ */
+@-moz-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* Slide top to bottom */
-/* line 31, ../sass/transitions.scss */
-.slide-ttb {
-  opacity: 1;
-  -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -o-transition: -o-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -webkit-transition: -webkit-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* line 35, ../sass/transitions.scss */
-.slide-ttb.page-in {
-  opacity: 0;
-  -moz-transform: translateY(0);
-  -ms-transform: translateY(0);
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* line 39, ../sass/transitions.scss */
-.slide-ttb.page-out {
-  opacity: 0;
-  -moz-transform: translateY(100%);
-  -ms-transform: translateY(100%);
-  -webkit-transform: translateY(100%);
-  transform: translateY(100%);
+@-moz-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-
-/* Fade in-out */
-/* line 45, ../sass/transitions.scss */
-.fade {
-  opacity: 1;
-  -moz-transition: opacity 0.6s ease-in-out;
-  -o-transition: opacity 0.6s ease-in-out;
-  -webkit-transition: opacity 0.6s ease-in-out;
-  transition: opacity 0.6s ease-in-out;
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-
-/* line 49, ../sass/transitions.scss */
-.fade.page-in,
-.fade.page-out {
-  opacity: 0;
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-
-/* Scale in-out */
-/* line 55, ../sass/transitions.scss */
-.scale {
-  -moz-transition: -moz-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -o-transition: -o-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  -webkit-transition: -webkit-transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+/* line 168, ../sass/animations.scss */
+.pt-fade {
+  -moz-animation: fade-in 0.6s ease-in-out;
+  -webkit-animation: fade-in 0.6s ease-in-out;
+  animation: fade-in 0.6s ease-in-out;
 }
-
-/* line 58, ../sass/transitions.scss */
-.scale.page-in {
-  opacity: 0;
-  -moz-transform: scale(0);
-  -ms-transform: scale(0);
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-
-/* line 62, ../sass/transitions.scss */
-.scale.page-out {
-  opacity: 0;
-  -moz-transform: scale(0);
-  -ms-transform: scale(0);
-  -webkit-transform: scale(0);
-  transform: scale(0);
+/* line 171, ../sass/animations.scss */
+.pt-fade.page-out {
+  -moz-animation: fade-out 0.6s ease-in-out;
+  -webkit-animation: fade-out 0.6s ease-in-out;
+  animation: fade-out 0.6s ease-in-out;
 }
 
 /* line 1, ../sass/modal.scss */

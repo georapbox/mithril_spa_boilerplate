@@ -1,8 +1,14 @@
+/**
+ * Router module
+ * Provides routing to application enhanced with animations and
+ * a router wrapper giving us the ability for custom acrtion when route changes.
+ */
 module.exports = (function (doc, app, dom, obj) {
     'use strict';
 
-    var transitionEvent = dom.whichTransitionEvent(),
-        animate = transitionEvent ?
+    var enableAnimations = true,
+		animationEvent = dom.whichAnimationEvent(),
+        animate = animationEvent && enableAnimations ?
             app.utils.animator(pageIn, pageOut, true, false) :
             function (myModule) {
                 return myModule;
@@ -15,27 +21,21 @@ module.exports = (function (doc, app, dom, obj) {
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageIn(el, callback) {
-        /**
-         * Overrides callback function of animator.
-         */
+		// Override callback function of animator.
         callback = function () {
             var next = el.nextElementSibling;
 
             doc.body.classList.remove('no-actions');
-            el.removeEventListener(transitionEvent, callback, false);
+            el.removeEventListener(animationEvent, callback, false);
             if (next) {
                 el.parentNode.removeChild(next);
+				next = null;
             }
         };
 
-        el.classList.add('page-in');
-        doc.body.classList.add('no-actions');
         animationClass && el.classList.add(animationClass);
-        el.addEventListener(transitionEvent, callback, false);
-
-        setTimeout(function () {
-            el.classList.remove('page-in');
-        }, 0);
+        doc.body.classList.add('no-actions');
+		el.addEventListener(animationEvent, callback, false);
     }
 
     /**
@@ -44,19 +44,13 @@ module.exports = (function (doc, app, dom, obj) {
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageOut(el, callback) {
-        /**
-         * Overrides callback function of animator.
-         */
+		// Override callback function of animator.
         callback = function () {
-            el.removeEventListener(transitionEvent, callback, false);
+            el.removeEventListener(animationEvent, callback, false);
         };
 
-        el.classList.remove('page-in');
-        el.addEventListener(transitionEvent, callback, false);
-
-        setTimeout(function () {
-            el.classList.add('page-out');
-        });
+		el.classList.add('page-out');
+		el.addEventListener(animationEvent, callback, false);
     }
 
     /**
@@ -68,7 +62,7 @@ module.exports = (function (doc, app, dom, obj) {
     function router(oModule, options) {
         var defaults = {
             name: '',
-            animClass: 'default'
+            animClass: ''
         };
         options = obj.extend({}, defaults, options);
         defaults = null;
@@ -103,23 +97,23 @@ module.exports = (function (doc, app, dom, obj) {
             m.route(doc.querySelector('m-view'), '/dashboard', {
                 '/dashboard': router(pages.dashboard, {
                     name: 'dashboard',
-                    animClass: 'slide-ttb'
+                    animClass: 'pt-slide-ttb'
                 }),
                 '/dashboard/:userName': router(pages.dashboard, {
                     name: 'dashboard',
-                    animClass: 'slide-ttb'
+                    animClass: 'pt-slide-ttb'
                 }),
                 '/userprofile/:userName': router(pages.userprofile, {
                     name: 'userprofile',
-                    animClass: 'fade'
+                    animClass: 'pt-slide-rtl'
                 }),
                 '/about': router(pages.about, {
                     name: 'about',
-                    animClass: 'slide-rtl'
+                    animClass: 'pt-slide-rtl'
                 }),
-                '/contact': router(pages.contact, {
-                    name: 'contact',
-                    animClass: 'slide-rtl'
+                '/contacts': router(pages.contacts, {
+                    name: 'contacts',
+                    animClass: 'pt-slide-rtl'
                 })
             });
         }

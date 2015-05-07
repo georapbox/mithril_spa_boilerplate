@@ -1,17 +1,16 @@
 /**
  * DOM utilities.
  */
-module.exports = (function () {
+module.exports = (function (doc) {
     'use strict';
 
     /**
-     * Responsible to find the appropriate "transitionend" event supported by each browser.
-     * If event is found, the event name is returned, else undefined.
-     * @returns {string} The supported event name
-     */
+	 * Detects the supported property name for the "transitionend" event. (transition)
+	 * @returns {string} The supported property name.
+	 */
     function whichTransitionEvent() {
-        var t,
-            el = document.createElement('div'),
+        var key,
+            el = doc.createElement('div'),
             transitions = {
                 'transition': 'transitionend',
                 'OTransition': 'oTransitionEnd',
@@ -19,17 +18,42 @@ module.exports = (function () {
                 'WebkitTransition': 'webkitTransitionEnd'
             };
 
-        for (t in transitions){
-            if (transitions.hasOwnProperty(t)) {
-                if (el.style[t] !== undefined) {
+        for (key in transitions){
+            if (transitions.hasOwnProperty(key)) {
+                if (el.style[key] !== undefined) {
                     el = null;
-                    return transitions[t];
+                    return transitions[key];
                 }
             }
         }
     }
 
+	/**
+	 * Detects the supported property name for the "animationend" event. (keyframes)
+	 * @returns {string} The supported property name.
+	 */
+	function whichAnimationEvent() {
+		var key,
+    		el = doc.createElement('div'),
+			animations = {
+				'animation': 'animationend',
+				'OAnimation': 'oAnimationEnd',
+				'MozAnimation': 'animationend',
+				'WebkitAnimation': 'webkitAnimationEnd'
+			};
+
+		for (key in animations) {
+			if (animations.hasOwnProperty(key)) {
+				if (el.style[key] !== undefined) {
+					el = null;
+					return animations[key];
+				}
+			}
+		}
+	}
+
     return {
-        whichTransitionEvent: whichTransitionEvent
+        whichTransitionEvent: whichTransitionEvent,
+        whichAnimationEvent: whichAnimationEvent
     };
-}());
+}(document));

@@ -16,7 +16,7 @@ module.exports = (function (doc) {
                 m('a[href="/about"]', { config: m.route }, 'About')
             ]),
             m('li.contact', [
-                m('a[href="/contact"]', { config: m.route }, 'Contact')
+                m('a[href="/contacts"]', { config: m.route }, 'Contacts')
             ])
         ]);
     };

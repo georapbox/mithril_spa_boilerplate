@@ -2,7 +2,7 @@
  * Modal component.
  * @returns {object} The modal module.
  */
-module.exports = (function () {
+module.exports = (function (win, doc) {
     'use strict';
 
 	/**
@@ -38,10 +38,7 @@ module.exports = (function () {
 					m('.modal-dialog', [
 						m('.modal-content', [
 							opts.header ? m('.modal-header', [
-								m('a.close', {
-									onclick: this.hide.bind(this)
-								}, m.trust('&times;')),
-								opts.header()
+								m('a.close', { onclick: this.hide.bind(this) }, m.trust('&times;')), opts.header()
 							]) : '',
 							opts.body ? m('.modal-body', opts.body()) : '',
 							opts.footer ? m('.modal-footer', opts.footer()) : ''
@@ -66,4 +63,4 @@ module.exports = (function () {
 	};
 
     return Modal;
-}());
+}(window, document));

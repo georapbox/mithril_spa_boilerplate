@@ -3,13 +3,17 @@
  * Provides routing to application enhanced with animations and
  * a router wrapper giving us the ability for custom acrtion when route changes.
  */
-module.exports = (function (doc, app, dom, obj) {
+module.exports = (function (doc, app) {
     'use strict';
+
+	var animator = require('./utils/animator'),
+		dom = require('./utils/dom'),
+		obj = require('./utils/objects');
 
     var enableAnimations = true,
 		animationEvent = dom.whichAnimationEvent(),
         animate = animationEvent && enableAnimations ?
-            app.utils.animator(pageIn, pageOut, true, false) :
+            animator(pageIn, pageOut, true, false) :
             function (myModule) {
                 return myModule;
             },
@@ -118,4 +122,4 @@ module.exports = (function (doc, app, dom, obj) {
             });
         }
     };
-}(document, app, app.utils.dom, app.utils.objects));
+}(document, app));

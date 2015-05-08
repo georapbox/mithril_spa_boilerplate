@@ -5,13 +5,14 @@
 module.exports = (function () {
     'use strict';
 
-    var modal = new app.components.Modal();
+	var Modal = require('../../components/modal'),
+		aboutModal = new Modal();
 
     var about = {};
 
 	about.controller = function () {
 		this.onunload = function () {
-			modal.hide();
+			aboutModal.hide();
 		};
 	};
 
@@ -30,10 +31,10 @@ module.exports = (function () {
 			m('p', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora voluptatem, sint necessitatibus beatae, perspiciatis deserunt praesentium iusto, distinctio corrupti, laborum cupiditate ut. Veritatis eos iure eveniet, nisi, mollitia pariatur unde?'),
 
 			m('a.btn.btn-primary', {
-				onclick: modal.show.bind(modal)
+				onclick: aboutModal.show.bind(aboutModal)
 			}, 'Show modal'),
 
-			modal.view({
+			aboutModal.view({
 				header: function () {
 					return m('h4.modal-title', 'Lorem ipsum');
 				},
@@ -42,7 +43,7 @@ module.exports = (function () {
 				},
 				footer: function () {
 					return m('a.btn.btn-default', {
-						onclick: modal.hide.bind(modal)
+						onclick: aboutModal.hide.bind(aboutModal)
 					}, 'Close');
 				}
 			})
@@ -51,7 +52,7 @@ module.exports = (function () {
 
     about.vm = {
         clickMe: function (element, isInitialized, context, vdom) {
-            function log() {
+			function log() {
                 console.log('element:', element);
                 console.log('isInitialized:', isInitialized);
                 console.log('context:', context);

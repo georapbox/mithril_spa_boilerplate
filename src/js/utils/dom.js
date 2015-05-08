@@ -52,8 +52,19 @@ module.exports = (function (doc) {
 		}
 	}
 
+	/**
+	 * Detects if a device is touch enabled.
+	 */
+	function isTouchDevice() {
+		var ua = navigator.userAgent;
+		return 'ontouchstart' in doc.documentElement ||
+			ua.indexOf('iPad') !== -1 ||
+			ua.indexOf('iPhone') !== -1;
+	}
+
     return {
         whichTransitionEvent: whichTransitionEvent,
-        whichAnimationEvent: whichAnimationEvent
+        whichAnimationEvent: whichAnimationEvent,
+		isTouchDevice: isTouchDevice
     };
 }(document));

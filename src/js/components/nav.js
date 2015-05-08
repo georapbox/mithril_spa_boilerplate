@@ -21,6 +21,10 @@ module.exports = (function (doc) {
         ]);
     };
 
-    m.render(doc.getElementById('js_nav'), nav.view());
-    return nav;
+
+    return  {
+		render: function () {
+			m.render(doc.getElementById('js_nav'), nav.view());
+		}
+	};
 }(document));

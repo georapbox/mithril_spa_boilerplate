@@ -1,12 +1,20 @@
 var m = (function app(window, undefined) {
-	var OBJECT = "[object Object]", ARRAY = "[object Array]", STRING = "[object String]", FUNCTION = "function";
+	var OBJECT = "[object Object]",
+		ARRAY = "[object Array]",
+		STRING = "[object String]",
+		FUNCTION = "function";
+
 	var type = {}.toString;
-	var parser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[.+?\])/g, attrParser = /\[(.+?)(?:=("|'|)(.*?)\2)?\]/;
+	var parser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[.+?\])/g;
+	var attrParser = /\[(.+?)(?:=("|'|)(.*?)\2)?\]/;
 	var voidElements = /^(AREA|BASE|BR|COL|COMMAND|EMBED|HR|IMG|INPUT|KEYGEN|LINK|META|PARAM|SOURCE|TRACK|WBR)$/;
-	var noop = function() {}
+	var noop = function() {};
 
 	// caching commonly used variables
-	var $document, $location, $requestAnimationFrame, $cancelAnimationFrame;
+	var $document,
+		$location,
+		$requestAnimationFrame,
+		$cancelAnimationFrame;
 
 	// self invoking function needed because of the way mocks work
 	function initialize(window){
@@ -33,44 +41,50 @@ var m = (function app(window, undefined) {
 	 *
 	 */
 	function m() {
-		var args = [].slice.call(arguments);
-		var hasAttrs = args[1] != null && type.call(args[1]) === OBJECT && !("tag" in args[1] || "view" in args[1]) && !("subtree" in args[1]);
-		var attrs = hasAttrs ? args[1] : {};
-		var classAttrName = "class" in attrs ? "class" : "className";
-		var cell = {tag: "div", attrs: {}};
-		var match, classes = [];
-		if (type.call(args[0]) != STRING) throw new Error("selector in m(selector, attrs, children) should be a string")
+		var args = [].slice.call(arguments),
+			hasAttrs = args[1] != null && type.call(args[1]) === OBJECT && !("tag" in args[1] || "view" in args[1]) && !("subtree" in args[1]),
+			attrs = hasAttrs ? args[1] : {},
+			classAttrName = "class" in attrs ? "class" : "className",
+			cell = {tag: "div", attrs: {}},
+			match,
+			classes = [];
+
+		if (type.call(args[0]) != STRING) {
+			throw new Error("selector in m(selector, attrs, children) should be a string");
+		}
+
 		while (match = parser.exec(args[0])) {
 			if (match[1] === "" && match[2]) cell.tag = match[2];
 			else if (match[1] === "#") cell.attrs.id = match[2];
 			else if (match[1] === ".") classes.push(match[2]);
 			else if (match[3][0] === "[") {
 				var pair = attrParser.exec(match[3]);
-				cell.attrs[pair[1]] = pair[3] || (pair[2] ? "" :true)
+				cell.attrs[pair[1]] = pair[3] || (pair[2] ? "" :true);
 			}
 		}
 
 		var children = hasAttrs ? args.slice(2) : args.slice(1);
 		if (children.length === 1 && type.call(children[0]) === ARRAY) {
-			cell.children = children[0]
-		}
-		else {
-			cell.children = children
+			cell.children = children[0];
+		} else {
+			cell.children = children;
 		}
 
 		for (var attrName in attrs) {
 			if (attrs.hasOwnProperty(attrName)) {
 				if (attrName === classAttrName && attrs[attrName] != null && attrs[attrName] !== "") {
-					classes.push(attrs[attrName])
-					cell.attrs[attrName] = "" //create key in correct iteration order
+					classes.push(attrs[attrName]);
+					cell.attrs[attrName] = ""; //create key in correct iteration order
+				} else {
+					cell.attrs[attrName] = attrs[attrName];
 				}
-				else cell.attrs[attrName] = attrs[attrName]
 			}
 		}
 		if (classes.length > 0) cell.attrs[classAttrName] = classes.join(" ");
 
-		return cell
+		return cell;
 	}
+
 	function build(parentElement, parentTag, parentCache, parentIndex, data, cached, shouldReattach, index, editable, namespace, configs) {
 		//`build` is a recursive function that manages creation/diffing/removal of DOM elements based on comparison between `data` and `cached`
 		//the diff algorithm can be summarized as this:
@@ -98,7 +112,7 @@ var m = (function app(window, undefined) {
 		//- this prevents lifecycle surprises from procedural helpers that mix implicit and explicit return statements (e.g. function foo() {if (cond) return m("div")}
 		//- it simplifies diffing code
 		//data.toString() might throw or return null if data is the return value of Console.log in Firefox (behavior depends on version)
-		try {if (data == null || data.toString() == null) data = "";} catch (e) {data = ""}
+		try {if (data == null || data.toString() == null) data = "";} catch (e) {data = "";}
 		if (data.subtree === "retain") return cached;
 		var cachedType = type.call(cached), dataType = type.call(data);
 		if (cached == null || cachedType !== dataType) {
@@ -106,13 +120,13 @@ var m = (function app(window, undefined) {
 				if (parentCache && parentCache.nodes) {
 					var offset = index - parentIndex;
 					var end = offset + (dataType === ARRAY ? data : cached.nodes).length;
-					clear(parentCache.nodes.slice(offset, end), parentCache.slice(offset, end))
+					clear(parentCache.nodes.slice(offset, end), parentCache.slice(offset, end));
 				}
-				else if (cached.nodes) clear(cached.nodes, cached)
+				else if (cached.nodes) clear(cached.nodes, cached);
 			}
 			cached = new data.constructor;
 			if (cached.tag) cached = {}; //if constructor creates a virtual dom element, use a blank object as the base cached node instead of copying the virtual el (#277)
-			cached.nodes = []
+			cached.nodes = [];
 		}
 
 		if (dataType === ARRAY) {
@@ -120,8 +134,8 @@ var m = (function app(window, undefined) {
 			for (var i = 0, len = data.length; i < len; i++) {
 				if (type.call(data[i]) === ARRAY) {
 					data = data.concat.apply([], data);
-					i-- //check current index again and flatten until there are no more nested arrays at that index
-					len = data.length
+					i--; //check current index again and flatten until there are no more nested arrays at that index
+					len = data.length;
 				}
 			}
 
@@ -137,7 +151,7 @@ var m = (function app(window, undefined) {
 			for (var i = 0; i < cached.length; i++) {
 				if (cached[i] && cached[i].attrs && cached[i].attrs.key != null) {
 					shouldMaintainIdentities = true;
-					existing[cached[i].attrs.key] = {action: DELETION, index: i}
+					existing[cached[i].attrs.key] = {action: DELETION, index: i};
 				}
 			}
 
@@ -145,18 +159,20 @@ var m = (function app(window, undefined) {
 			for (var i = 0, len = data.length; i < len; i++) {
 				if (data[i] && data[i].attrs && data[i].attrs.key != null) {
 					for (var j = 0, len = data.length; j < len; j++) {
-						if (data[j] && data[j].attrs && data[j].attrs.key == null) data[j].attrs.key = "__mithril__" + guid++
+						if (data[j] && data[j].attrs && data[j].attrs.key == null) {
+							data[j].attrs.key = "__mithril__" + guid++;
+						}
 					}
-					break
+					break;
 				}
 			}
 
 			if (shouldMaintainIdentities) {
-				var keysDiffer = false
+				var keysDiffer = false;
 				if (data.length != cached.length) keysDiffer = true
 				else for (var i = 0, cachedCell, dataCell; cachedCell = cached[i], dataCell = data[i]; i++) {
 					if (cachedCell.attrs && dataCell.attrs && cachedCell.attrs.key != dataCell.attrs.key) {
-						keysDiffer = true
+						keysDiffer = true;
 						break
 					}
 				}
@@ -166,40 +182,43 @@ var m = (function app(window, undefined) {
 						if (data[i] && data[i].attrs) {
 							if (data[i].attrs.key != null) {
 								var key = data[i].attrs.key;
-								if (!existing[key]) existing[key] = {action: INSERTION, index: i};
-								else existing[key] = {
-									action: MOVE,
-									index: i,
-									from: existing[key].index,
-									element: cached.nodes[existing[key].index] || $document.createElement("div")
+								if (!existing[key]) {
+									existing[key] = {action: INSERTION, index: i};
+								} else {
+									existing[key] = {
+										action: MOVE,
+										index: i,
+										from: existing[key].index,
+										element: cached.nodes[existing[key].index] || $document.createElement("div")
+									};
 								}
 							}
 						}
 					}
-					var actions = []
-					for (var prop in existing) actions.push(existing[prop])
+					var actions = [];
+					for (var prop in existing) actions.push(existing[prop]);
 					var changes = actions.sort(sortChanges);
-					var newCached = new Array(cached.length)
-					newCached.nodes = cached.nodes.slice()
+					var newCached = new Array(cached.length);
+					newCached.nodes = cached.nodes.slice();
 
 					for (var i = 0, change; change = changes[i]; i++) {
 						if (change.action === DELETION) {
 							clear(cached[change.index].nodes, cached[change.index]);
-							newCached.splice(change.index, 1)
+							newCached.splice(change.index, 1);
 						}
 						if (change.action === INSERTION) {
 							var dummy = $document.createElement("div");
 							dummy.key = data[change.index].attrs.key;
 							parentElement.insertBefore(dummy, parentElement.childNodes[change.index] || null);
-							newCached.splice(change.index, 0, {attrs: {key: data[change.index].attrs.key}, nodes: [dummy]})
-							newCached.nodes[change.index] = dummy
+							newCached.splice(change.index, 0, {attrs: {key: data[change.index].attrs.key}, nodes: [dummy]});
+							newCached.nodes[change.index] = dummy;
 						}
 
 						if (change.action === MOVE) {
 							if (parentElement.childNodes[change.index] !== change.element && change.element !== null) {
 								parentElement.insertBefore(change.element, parentElement.childNodes[change.index] || null)
 							}
-							newCached[change.index] = cached[change.from]
+							newCached[change.index] = cached[change.from];
 							newCached.nodes[change.index] = change.element
 						}
 					}
@@ -217,7 +236,7 @@ var m = (function app(window, undefined) {
 					//fix offset of next element if item was a trusted string w/ more than one html element
 					//the first clause in the regexp matches elements
 					//the second clause (after the pipe) matches text nodes
-					subArrayCount += (item.match(/<[^\/]|\>\s*[^<]/g) || [0]).length
+					subArrayCount += (item.match(/<[^\/]|\>\s*[^<]/g) || [0]).length;
 				}
 				else subArrayCount += type.call(item) === ARRAY ? item.length : 1;
 				cached[cacheCount++] = item
@@ -239,28 +258,30 @@ var m = (function app(window, undefined) {
 			}
 		}
 		else if (data != null && dataType === OBJECT) {
-			var views = [], controllers = []
+			var views = [],
+				controllers = [];
+
 			while (data.view) {
-				var view = data.view.$original || data.view
-				var controllerIndex = m.redraw.strategy() == "diff" && cached.views ? cached.views.indexOf(view) : -1
-				var controller = controllerIndex > -1 ? cached.controllers[controllerIndex] : new (data.controller || noop)
-				var key = data && data.attrs && data.attrs.key
-				data = pendingRequests == 0 || (cached && cached.controllers && cached.controllers.indexOf(controller) > -1) ? data.view(controller) : {tag: "placeholder"}
+				var view = data.view.$original || data.view;
+				var controllerIndex = m.redraw.strategy() == "diff" && cached.views ? cached.views.indexOf(view) : -1;
+				var controller = controllerIndex > -1 ? cached.controllers[controllerIndex] : new (data.controller || noop);
+				var key = data && data.attrs && data.attrs.key;
+				data = pendingRequests == 0 || (cached && cached.controllers && cached.controllers.indexOf(controller) > -1) ? data.view(controller) : {tag: "placeholder"};
 				if (data.subtree === "retain") return cached;
 				if (key) {
-					if (!data.attrs) data.attrs = {}
+					if (!data.attrs) data.attrs = {};
 					data.attrs.key = key
 				}
-				if (controller.onunload) unloaders.push({controller: controller, handler: controller.onunload})
-				views.push(view)
-				controllers.push(controller)
+				if (controller.onunload) unloaders.push({controller: controller, handler: controller.onunload});
+				views.push(view);
+				controllers.push(controller);
 			}
 			if (!data.tag && controllers.length) throw new Error("Component template must return a virtual element, not an array, string, etc.")
 			if (!data.attrs) data.attrs = {};
 			if (!cached.attrs) cached.attrs = {};
 
-			var dataAttrKeys = Object.keys(data.attrs)
-			var hasKeys = dataAttrKeys.length > ("key" in data.attrs ? 1 : 0)
+			var dataAttrKeys = Object.keys(data.attrs);
+			var hasKeys = dataAttrKeys.length > ("key" in data.attrs ? 1 : 0);
 			//if an element is different enough from the one in cache, recreate it
 			if (data.tag != cached.tag || dataAttrKeys.sort().join() != Object.keys(cached.attrs).sort().join() || data.attrs.id != cached.attrs.id || data.attrs.key != cached.attrs.key || (m.redraw.strategy() == "all" && (!cached.configContext || cached.configContext.retain !== true)) || (m.redraw.strategy() == "diff" && cached.configContext && cached.configContext.retain === false)) {
 				if (cached.nodes.length) clear(cached.nodes);
@@ -376,7 +397,11 @@ var m = (function app(window, undefined) {
 
 		return cached
 	}
-	function sortChanges(a, b) {return a.action - b.action || a.index - b.index}
+
+	function sortChanges(a, b) {
+		return a.action - b.action || a.index - b.index;
+	}
+
 	function setAttributes(node, tag, dataAttrs, cachedAttrs, namespace) {
 		for (var attrName in dataAttrs) {
 			var dataAttr = dataAttrs[attrName];
@@ -424,8 +449,9 @@ var m = (function app(window, undefined) {
 				node.value = dataAttr
 			}
 		}
-		return cachedAttrs
+		return cachedAttrs;
 	}
+
 	function clear(nodes, cached) {
 		for (var i = nodes.length - 1; i > -1; i--) {
 			if (nodes[i] && nodes[i].parentNode) {
@@ -435,8 +461,9 @@ var m = (function app(window, undefined) {
 				if (cached[i]) unload(cached[i])
 			}
 		}
-		if (nodes.length != 0) nodes.length = 0
+		if (nodes.length != 0) nodes.length = 0;
 	}
+
 	function unload(cached) {
 		if (cached.configContext && typeof cached.configContext.onunload === FUNCTION) {
 			cached.configContext.onunload();
@@ -450,10 +477,12 @@ var m = (function app(window, undefined) {
 		if (cached.children) {
 			if (type.call(cached.children) === ARRAY) {
 				for (var i = 0, child; child = cached.children[i]; i++) unload(child)
+			} else if (cached.children.tag) {
+				unload(cached.children);
 			}
-			else if (cached.children.tag) unload(cached.children)
 		}
 	}
+
 	function injectHTML(parentElement, index, data) {
 		var nextSibling = parentElement.childNodes[index];
 		if (nextSibling) {
@@ -463,17 +492,22 @@ var m = (function app(window, undefined) {
 				parentElement.insertBefore(placeholder, nextSibling || null);
 				placeholder.insertAdjacentHTML("beforebegin", data);
 				parentElement.removeChild(placeholder)
+			} else {
+				nextSibling.insertAdjacentHTML("beforebegin", data);
 			}
-			else nextSibling.insertAdjacentHTML("beforebegin", data)
+		} else {
+			parentElement.insertAdjacentHTML("beforeend", data);
 		}
-		else parentElement.insertAdjacentHTML("beforeend", data);
+
 		var nodes = [];
+
 		while (parentElement.childNodes[index] !== nextSibling) {
 			nodes.push(parentElement.childNodes[index]);
 			index++
 		}
-		return nodes
+		return nodes;
 	}
+
 	function autoredraw(callback, object) {
 		return function(e) {
 			e = e || event;
@@ -501,7 +535,10 @@ var m = (function app(window, undefined) {
 		},
 		childNodes: []
 	};
-	var nodeCache = [], cellCache = {};
+
+	var nodeCache = [],
+		cellCache = {};
+
 	m.render = function(root, cell, forceRecreation) {
 		var configs = [];
 		if (!root) throw new Error("Ensure the DOM element being passed to m.route/m.mount/m.render is not undefined.");
@@ -514,6 +551,7 @@ var m = (function app(window, undefined) {
 		cellCache[id] = build(node, null, undefined, undefined, cell, cellCache[id], false, 0, null, undefined, configs);
 		for (var i = 0, len = configs.length; i < len; i++) configs[i]()
 	};
+
 	function getCellCacheKey(element) {
 		var index = nodeCache.indexOf(element);
 		return index < 0 ? nodeCache.push(element) - 1 : index
@@ -547,8 +585,19 @@ var m = (function app(window, undefined) {
 		return gettersetter(store)
 	};
 
-	var roots = [], components = [], controllers = [], lastRedrawId = null, lastRedrawCallTime = 0, computePreRedrawHook = null, computePostRedrawHook = null, prevented = false, topComponent, unloaders = [];
+	var roots = [],
+		components = [],
+		controllers = [],
+		lastRedrawId = null,
+		lastRedrawCallTime = 0,
+		computePreRedrawHook = null,
+		computePostRedrawHook = null,
+		prevented = false,
+		topComponent,
+		unloaders = [];
+
 	var FRAME_BUDGET = 16; //60 frames per second = 1 call per 16 ms
+
 	function parameterize(component, args) {
 		var controller = function() {
 			return (component.controller || noop).apply(this, args) || this
@@ -562,9 +611,11 @@ var m = (function app(window, undefined) {
 		if (args[0] && args[0].key != null) output.attrs = {key: args[0].key}
 		return output
 	}
+
 	m.component = function(component) {
 		return parameterize(component, [].slice.call(arguments, 1))
 	}
+
 	m.mount = m.module = function(root, component) {
 		if (!root) throw new Error("Please ensure the DOM element exists before rendering a template into it.");
 		var index = roots.indexOf(root);
@@ -606,8 +657,10 @@ var m = (function app(window, undefined) {
 			return controllers[index]
 		}
 	};
-	var redrawing = false
-	m.redraw = function(force) {
+
+	var redrawing = false;
+
+	m.redraw = function (force) {
 		if (redrawing) return
 		redrawing = true
 		//lastRedrawId is a positive number if a second redraw is requested before the next animation frame
@@ -619,14 +672,18 @@ var m = (function app(window, undefined) {
 				if (lastRedrawId > 0) $cancelAnimationFrame(lastRedrawId);
 				lastRedrawId = $requestAnimationFrame(redraw, FRAME_BUDGET)
 			}
-		}
-		else {
+		} else {
 			redraw();
-			lastRedrawId = $requestAnimationFrame(function() {lastRedrawId = null}, FRAME_BUDGET)
+			lastRedrawId = $requestAnimationFrame(function () {
+				lastRedrawId = null;
+			}, FRAME_BUDGET);
 		}
-		redrawing = false
+
+		redrawing = false;
 	};
+
 	m.redraw.strategy = m.prop();
+
 	function redraw() {
 		if (computePreRedrawHook) {
 			computePreRedrawHook()
@@ -650,10 +707,12 @@ var m = (function app(window, undefined) {
 
 	var pendingRequests = 0;
 	m.startComputation = function() {pendingRequests++};
+
 	m.endComputation = function() {
 		pendingRequests = Math.max(pendingRequests - 1, 0);
 		if (pendingRequests === 0) m.redraw()
 	};
+
 	var endFirstComputation = function() {
 		if (m.redraw.strategy() == "none") {
 			pendingRequests--
@@ -672,7 +731,11 @@ var m = (function app(window, undefined) {
 
 	//routing
 	var modes = {pathname: "", hash: "#", search: "?"};
-	var redirect = noop, routeParams, currentRoute, isDefaultRoute = false;
+	var redirect = noop,
+		routeParams,
+		currentRoute,
+		isDefaultRoute = false;
+
 	m.route = function() {
 		//m.route()
 		if (arguments.length === 0) return currentRoute;
@@ -742,14 +805,18 @@ var m = (function app(window, undefined) {
 			}
 		}
 	};
+
 	m.route.param = function(key) {
 		if (!routeParams) throw new Error("You must call m.route(element, defaultRoute, routes) before calling m.route.param()")
 		return routeParams[key]
 	};
+
 	m.route.mode = "search";
+
 	function normalizeRoute(route) {
 		return route.slice(modes[m.route.mode].length)
 	}
+
 	function routeByValue(root, router, path) {
 		routeParams = {};
 
@@ -787,6 +854,7 @@ var m = (function app(window, undefined) {
 			}
 		}
 	}
+
 	function routeUnobtrusive(e) {
 		e = e || event;
 		if (e.ctrlKey || e.metaKey || e.which === 2) return;
@@ -797,10 +865,12 @@ var m = (function app(window, undefined) {
 		while (currentTarget && currentTarget.nodeName.toUpperCase() != "A") currentTarget = currentTarget.parentNode
 		m.route(currentTarget[m.route.mode].slice(modes[m.route.mode].length), args)
 	}
+
 	function setScroll() {
 		if (m.route.mode != "hash" && $location.hash) $location.hash = $location.hash;
 		else window.scrollTo(0, 0)
 	}
+
 	function buildQueryString(object, prefix) {
 		var duplicates = {}
 		var str = []
@@ -823,6 +893,7 @@ var m = (function app(window, undefined) {
 		}
 		return str.join("&")
 	}
+
 	function parseQueryString(str) {
 		if (str.charAt(0) === "?") str = str.substring(1);
 
@@ -834,13 +905,15 @@ var m = (function app(window, undefined) {
 			if (params[key] != null) {
 				if (type.call(params[key]) !== ARRAY) params[key] = [params[key]]
 				params[key].push(value)
+			} else {
+				params[key] = value;
 			}
-			else params[key] = value
 		}
-		return params
+		return params;
 	}
-	m.route.buildQueryString = buildQueryString
-	m.route.parseQueryString = parseQueryString
+
+	m.route.buildQueryString = buildQueryString;
+	m.route.parseQueryString = parseQueryString;
 
 	function reset(root) {
 		var cacheKey = getCellCacheKey(root);
@@ -853,14 +926,16 @@ var m = (function app(window, undefined) {
 		deferred.promise = propify(deferred.promise);
 		return deferred
 	};
+
 	function propify(promise, initialValue) {
 		var prop = m.prop(initialValue);
 		promise.then(prop);
 		prop.then = function(resolve, reject) {
 			return propify(promise.then(resolve, reject), initialValue)
 		};
-		return prop
+		return prop;
 	}
+
 	//Promiz.mithril.js | Zolmeister | MIT
 	//a modified version of Promiz.js, which does not conform to Promises/A+ for two reasons:
 	//1) `then` callbacks are called synchronously (because setTimeout is too slow, and the setImmediate polyfill is too big
@@ -876,9 +951,9 @@ var m = (function app(window, undefined) {
 				promiseValue = value;
 				state = RESOLVING;
 
-				fire()
+				fire();
 			}
-			return this
+			return this;
 		};
 
 		self["reject"] = function(value) {
@@ -886,9 +961,9 @@ var m = (function app(window, undefined) {
 				promiseValue = value;
 				state = REJECTING;
 
-				fire()
+				fire();
 			}
-			return this
+			return this;
 		};
 
 		self.promise["then"] = function(successCallback, failureCallback) {
@@ -908,8 +983,8 @@ var m = (function app(window, undefined) {
 		function finish(type) {
 			state = type || REJECTED;
 			next.map(function(deferred) {
-				state === RESOLVED && deferred.resolve(promiseValue) || deferred.reject(promiseValue)
-			})
+				state === RESOLVED && deferred.resolve(promiseValue) || deferred.reject(promiseValue);
+			});
 		}
 
 		function thennable(then, successCallback, failureCallback, notThennableCallback) {
@@ -920,35 +995,35 @@ var m = (function app(window, undefined) {
 					then.call(promiseValue, function(value) {
 						if (count++) return;
 						promiseValue = value;
-						successCallback()
+						successCallback();
 					}, function (value) {
 						if (count++) return;
 						promiseValue = value;
-						failureCallback()
+						failureCallback();
 					})
-				}
-				catch (e) {
+				} catch (e) {
 					m.deferred.onerror(e);
 					promiseValue = e;
-					failureCallback()
+					failureCallback();
 				}
 			} else {
-				notThennableCallback()
+				notThennableCallback();
 			}
 		}
 
 		function fire() {
 			// check if it's a thenable
 			var then;
+
 			try {
 				then = promiseValue && promiseValue.then
-			}
-			catch (e) {
+			} catch (e) {
 				m.deferred.onerror(e);
 				promiseValue = e;
 				state = REJECTING;
 				return fire()
 			}
+
 			thennable(then, function() {
 				state = RESOLVING;
 				fire()
@@ -958,35 +1033,32 @@ var m = (function app(window, undefined) {
 			}, function() {
 				try {
 					if (state === RESOLVING && typeof successCallback === FUNCTION) {
-						promiseValue = successCallback(promiseValue)
-					}
-					else if (state === REJECTING && typeof failureCallback === "function") {
+						promiseValue = successCallback(promiseValue);
+					} else if (state === REJECTING && typeof failureCallback === "function") {
 						promiseValue = failureCallback(promiseValue);
-						state = RESOLVING
+						state = RESOLVING;
 					}
-				}
-				catch (e) {
+				} catch (e) {
 					m.deferred.onerror(e);
 					promiseValue = e;
-					return finish()
+					return finish();
 				}
 
 				if (promiseValue === self) {
 					promiseValue = TypeError();
-					finish()
-				}
-				else {
+					finish();
+				} else {
 					thennable(then, function () {
-						finish(RESOLVED)
+						finish(RESOLVED);
 					}, finish, function () {
-						finish(state === RESOLVING && RESOLVED)
-					})
+						finish(state === RESOLVING && RESOLVED);
+					});
 				}
 			})
 		}
 	}
 	m.deferred.onerror = function(e) {
-		if (type.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e
+		if (type.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e;
 	};
 
 	m.sync = function(args) {
@@ -1015,7 +1087,10 @@ var m = (function app(window, undefined) {
 
 		return deferred.promise
 	};
-	function identity(value) {return value}
+
+	function identity(value) {
+		return value;
+	}
 
 	function ajax(options) {
 		if (options.dataType && options.dataType.toLowerCase() === "jsonp") {
@@ -1058,8 +1133,7 @@ var m = (function app(window, undefined) {
 				+ "=" + callbackKey
 				+ "&" + buildQueryString(options.data || {});
 			$document.body.appendChild(script)
-		}
-		else {
+		} else {
 			var xhr = new window.XMLHttpRequest;
 			xhr.open(options.method, options.url, true, options.user, options.password);
 			xhr.onreadystatechange = function() {
@@ -1084,28 +1158,30 @@ var m = (function app(window, undefined) {
 				throw "Request data should be either be a string or FormData. Check the `serialize` option in `m.request`";
 			}
 			xhr.send(data);
-			return xhr
+			return xhr;
 		}
 	}
+
 	function bindData(xhrOptions, data, serialize) {
 		if (xhrOptions.method === "GET" && xhrOptions.dataType != "jsonp") {
 			var prefix = xhrOptions.url.indexOf("?") < 0 ? "?" : "&";
 			var querystring = buildQueryString(data);
-			xhrOptions.url = xhrOptions.url + (querystring ? prefix + querystring : "")
+			xhrOptions.url = xhrOptions.url + (querystring ? prefix + querystring : "");
 		}
 		else xhrOptions.data = serialize(data);
-		return xhrOptions
+		return xhrOptions;
 	}
+
 	function parameterizeUrl(url, data) {
 		var tokens = url.match(/:[a-z]\w+/gi);
 		if (tokens && data) {
 			for (var i = 0; i < tokens.length; i++) {
 				var key = tokens[i].slice(1);
 				url = url.replace(tokens[i], data[key]);
-				delete data[key]
+				delete data[key];
 			}
 		}
-		return url
+		return url;
 	}
 
 	m.request = function(xhrOptions) {
@@ -1149,10 +1225,11 @@ var m = (function app(window, undefined) {
 		initialize(window = mock || window);
 		return window;
 	};
+
 	//for internal testing only, do not use `m.deps.factory`
 	m.deps.factory = app;
 
-	return m
+	return m;
 })(typeof window != "undefined" ? window : {});
 
 if (typeof module != "undefined" && module !== null && module.exports) module.exports = m;

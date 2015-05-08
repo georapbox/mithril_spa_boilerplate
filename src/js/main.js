@@ -1,18 +1,11 @@
-(function (win) {
+(function (win, doc) {
     'use strict';
 
     win.m = require('./lib/mithril');
+    win.app = win.app || {};
 
-    win.app = window.app || {
-        utils: {
-            dom: require('./utils/dom'),
-            objects: require('./utils/objects'),
-            animator: require('./utils/animator')
-        },
-		components: {
-			Modal: require('./components/modal')
-		}
-    };
+	var attachFastClick = require('./lib/fastclick');
+	attachFastClick(doc.body);
 
     var router = require('./router');
     router.init({
@@ -22,5 +15,6 @@
         contacts: require('./components/pages/contacts')
     });
 
-	win.app.components.nav = require('./components/nav');
-}(window));
+	var nav = require('./components/nav');
+	nav.render();
+}(window, document));

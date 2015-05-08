@@ -5,8 +5,11 @@
 module.exports = (function () {
     'use strict';
 
-	// Create a modal instance
-	var newContactModal = new app.components.Modal();
+	var PubSub = require('../../lib/pubsub'),
+		ps = new PubSub();
+
+	var Modal = require('../../components/modal'),
+		newContactModal = new Modal();
 
 	// Hardcoded contacts data
 	var contactsData = [{
@@ -96,8 +99,7 @@ module.exports = (function () {
 						placeholder: 'eg: George Raptis',
 						oninput: m.withAttr('value', contact.name),
 						value: contact.name() || ''
-					}),
-					m('p', contact.name())
+					})
 				]),
 
 				m('.form-group', [
@@ -119,6 +121,13 @@ module.exports = (function () {
 
 	// ContactList component
 	var ContactsList = {
+		controller: function () {
+			ps.on('UPDATE_CONTACT', function () {
+				console.info('UPDATED');
+			});
+
+			console.log(ps.topics)
+		},
 		view: function (ctrl, args) {
 			return m('.table-responsive', [
 				m('table.table.table-bordered', [
@@ -154,7 +163,14 @@ module.exports = (function () {
 					save(contact).
 					then(update.bind(this)).
 					then(newContactModal.hide());
+
+				ps.trigger('UPDATE_CONTACT');
 			}.bind(this);
+
+			this.onunload = function () {
+				console.log('ContactsWidget unloaded --> Unsubscribe form events');
+				ps.off('UPDATE_CONTACT');
+			};
 		},
 		view: function (ctrl) {
 			return m('div.m-page', [

@@ -52,13 +52,13 @@ module.exports = (function () {
             m('ul', [
                 dashboard.vm.users.map(function (usr, idx) {
                     return m('li', {key: usr.id}, [
-                        m('a[href="/dashboard/' + usr.username() + '"]', { config: m.route }, usr.name())
+                        m('a[href="/dashboard/' + usr.username() + '"]', {config: m.route}, usr.name())
                     ]);
                 })
             ]),
-            m('h2', controller.id ? ('Hello ' + controller.id) :'This is the dashboard.'),
-            m('p', { style: controller.id ? 'display:block' : 'display:none'}, [
-                m('a[href="/userprofile/' + controller.id + '"]', { config: m.route }, 'Read more')
+            m('h2', controller.id ? ('Hello ' + controller.id) : 'This is the dashboard.'),
+            m('p', {style: controller.id ? 'display:block' : 'display:none'}, [
+                m('a[href="/userprofile/' + controller.id + '"]', {config: m.route}, 'Read more')
             ])
         ]);
     };

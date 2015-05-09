@@ -5,62 +5,62 @@
 module.exports = (function (win, doc) {
     'use strict';
 
-	/**
+    /**
 	 * Creates a modal instance.
 	 * @constructor
 	 */
-	function Modal() {
-		var that = this;
-		var modalConfig = function (element) {
-			setTimeout(function () {
-				element.classList.add('fadein');
-			}, 50);
+    function Modal() {
+        var that = this;
+        var modalConfig = function (element) {
+            setTimeout(function () {
+                element.classList.add('fadein');
+            }, 50);
 
-			element.addEventListener('click', hideModal, false);
+            element.addEventListener('click', hideModal, false);
 
-			function hideModal(e) {
-				if (e.target.classList.contains('modal')) {
-					element.removeEventListener('click', hideModal, false);
-					m.startComputation();
-					that.hide();
-					m.endComputation();
-				}
-			}
-		};
+            function hideModal(e) {
+                if (e.target.classList.contains('modal')) {
+                    element.removeEventListener('click', hideModal, false);
+                    m.startComputation();
+                    that.hide();
+                    m.endComputation();
+                }
+            }
+        };
 
-		// Getter / Setter for modal's visibility status.
-		this.visible = m.prop(false);
+        // Getter / Setter for modal's visibility status.
+        this.visible = m.prop(false);
 
-		// The modal's view.
-		this.view = function (opts) {
-			return this.visible() ?
-				m('.modal', { config: modalConfig }, [
-					m('.modal-dialog', [
-						m('.modal-content', [
-							opts.header ? m('.modal-header', [
-								m('a.close', { onclick: this.hide.bind(this) }, m.trust('&times;')), opts.header()
-							]) : '',
-							opts.body ? m('.modal-body', opts.body()) : '',
-							opts.footer ? m('.modal-footer', opts.footer()) : ''
-						])
-					])
-				]) : '';
-		};
-	}
+        // The modal's view.
+        this.view = function (opts) {
+            return this.visible() ?
+                m('.modal', {config: modalConfig}, [
+                    m('.modal-dialog', [
+                        m('.modal-content', [
+                            opts.header ? m('.modal-header', [
+                                m('a.close', {onclick: this.hide.bind(this)}, m.trust('&times;')), opts.header()
+                            ]) : '',
+                            opts.body ? m('.modal-body', opts.body()) : '',
+                            opts.footer ? m('.modal-footer', opts.footer()) : ''
+                        ])
+                    ])
+            ]) : '';
+        };
+    }
 
-	var proto = Modal.prototype;
+    var proto = Modal.prototype;
 
-	proto.show = function () {
-		this.visible = m.prop(true);
-	};
+    proto.show = function () {
+        this.visible = m.prop(true);
+    };
 
-	proto.hide = function () {
-		this.visible = m.prop(false);
-	};
+    proto.hide = function () {
+        this.visible = m.prop(false);
+    };
 
-	proto.isVisible = function () {
-		return this.visible();
-	};
+    proto.isVisible = function () {
+        return this.visible();
+    };
 
     return Modal;
 }(window, document));

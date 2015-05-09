@@ -22,7 +22,7 @@ module.exports = (function () {
                 return animationConfig(x, y, z);
             } else if (x.attrs) { // When passed a virtual DOM node (the output of m)
                 return bindConfigTo(x);
-            } else if(x.view) { // When applied to a Mithril module / component
+            } else if (x.view) { // When applied to a Mithril module / component
                 return {
                     controller: x.controller || noop,
                     view: function animatedView (ctrl) {
@@ -81,7 +81,7 @@ module.exports = (function () {
                     parent.insertBefore(insertion, reference);
                     outgoing(insertion, function destroy () {
                         if (parent.contains(insertion)) {
-							parent.removeChild(insertion);
+                            parent.removeChild(insertion);
                         }
                     }, context);
                 }
@@ -90,7 +90,7 @@ module.exports = (function () {
     };
 
     function noop() {
-		console.log('3');
-	}
+        console.log('3');
+    }
     return animator;
 }());

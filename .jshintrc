@@ -1,14 +1,27 @@
 {
-    "browser": true,
-    "devel": true,
-    "undef": true,
-    "unused": "vars",
-    "strict": true,
-    "expr": true,
+    "curly": true,
+	"eqeqeq": true,
+	"forin": true,
+	"freeze": true,
+	"immed": true,
+	"noarg": true,
+	"noempty": true,
+	"nonew": true,
+	"quotmark": "single",
+	"undef": true,
+	"unused": "vars",
+	"strict": true,
+	"latedef": "nofunc",
+	"expr": true,
+	"browser": true,
+	"devel": true,
     "node": true,
     "browserify": true,
+    "phantom": true,
     "predef": [
         "app",
-        "m"
+        "m",
+		"Observable",
+        "define"
     ]
 }

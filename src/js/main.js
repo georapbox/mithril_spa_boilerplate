@@ -4,8 +4,8 @@
     win.m = require('./lib/mithril');
     win.app = win.app || {};
 
-	var attachFastClick = require('./lib/fastclick');
-	attachFastClick(doc.body);
+    var attachFastClick = require('./lib/fastclick');
+    attachFastClick(doc.body);
 
     var router = require('./router');
     router.init({
@@ -15,6 +15,6 @@
         contacts: require('./components/pages/contacts')
     });
 
-	var nav = require('./components/nav');
-	nav.render();
+    var nav = require('./components/nav');
+    nav.render();
 }(window, document));

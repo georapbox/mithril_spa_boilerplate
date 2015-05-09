@@ -18,7 +18,7 @@ module.exports = (function (doc) {
                 'WebkitTransition': 'webkitTransitionEnd'
             };
 
-        for (key in transitions){
+        for (key in transitions) {
             if (transitions.hasOwnProperty(key)) {
                 if (el.style[key] !== undefined) {
                     el = null;
@@ -28,43 +28,43 @@ module.exports = (function (doc) {
         }
     }
 
-	/**
+    /**
 	 * Detects the supported property name for the "animationend" event. (keyframes)
 	 * @returns {string} The supported property name.
 	 */
-	function whichAnimationEvent() {
-		var key,
-    		el = doc.createElement('div'),
-			animations = {
-				'animation': 'animationend',
-				'OAnimation': 'oAnimationEnd',
-				'MozAnimation': 'animationend',
-				'WebkitAnimation': 'webkitAnimationEnd'
-			};
+    function whichAnimationEvent() {
+        var key,
+            el = doc.createElement('div'),
+            animations = {
+                'animation': 'animationend',
+                'OAnimation': 'oAnimationEnd',
+                'MozAnimation': 'animationend',
+                'WebkitAnimation': 'webkitAnimationEnd'
+            };
 
-		for (key in animations) {
-			if (animations.hasOwnProperty(key)) {
-				if (el.style[key] !== undefined) {
-					el = null;
-					return animations[key];
-				}
-			}
-		}
-	}
+        for (key in animations) {
+            if (animations.hasOwnProperty(key)) {
+                if (el.style[key] !== undefined) {
+                    el = null;
+                    return animations[key];
+                }
+            }
+        }
+    }
 
-	/**
+    /**
 	 * Detects if a device is touch enabled.
 	 */
-	function isTouchDevice() {
-		var ua = navigator.userAgent;
-		return 'ontouchstart' in doc.documentElement ||
-			ua.indexOf('iPad') !== -1 ||
-			ua.indexOf('iPhone') !== -1;
-	}
+    function isTouchDevice() {
+        var ua = navigator.userAgent;
+        return 'ontouchstart' in doc.documentElement ||
+            ua.indexOf('iPad') !== -1 ||
+            ua.indexOf('iPhone') !== -1;
+    }
 
     return {
         whichTransitionEvent: whichTransitionEvent,
         whichAnimationEvent: whichAnimationEvent,
-		isTouchDevice: isTouchDevice
+        isTouchDevice: isTouchDevice
     };
 }(document));

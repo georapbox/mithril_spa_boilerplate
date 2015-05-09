@@ -6,7 +6,7 @@
 module.exports = (function (doc, app) {
     'use strict';
 
-	var animator = require('./utils/animator'),
+    var animator = require('./utils/animator'),
 		dom = require('./utils/dom'),
 		obj = require('./utils/objects');
 
@@ -25,7 +25,7 @@ module.exports = (function (doc, app) {
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageIn(el, callback) {
-		// Override callback function of animator.
+        // Override callback function of animator.
         callback = function () {
             var next = el.nextElementSibling;
 
@@ -33,13 +33,13 @@ module.exports = (function (doc, app) {
             el.removeEventListener(animationEvent, callback, false);
             if (next) {
                 el.parentNode.removeChild(next);
-				next = null;
+                next = null;
             }
         };
 
         animationClass && el.classList.add(animationClass);
         doc.body.classList.add('no-actions');
-		el.addEventListener(animationEvent, callback, false);
+        el.addEventListener(animationEvent, callback, false);
     }
 
     /**
@@ -48,13 +48,13 @@ module.exports = (function (doc, app) {
      * @param {function} callback Function to be executed after transition ends.
      */
     function pageOut(el, callback) {
-		// Override callback function of animator.
+        // Override callback function of animator.
         callback = function () {
             el.removeEventListener(animationEvent, callback, false);
         };
 
-		el.classList.add('page-out');
-		el.addEventListener(animationEvent, callback, false);
+        el.classList.add('page-out');
+        el.addEventListener(animationEvent, callback, false);
     }
 
     /**

@@ -30,6 +30,26 @@ module.exports = (function () {
         email: 'tduncan@gmail.com'
     }];
 
+    /**
+     * ViewModel helper factory.
+     * @param {object} signature
+     * @returns {function}
+     */
+    var viewModelMap = function (signature) {
+        var map = {};
+        return function (key) {
+            if (!map[key]) {
+                map[key] = {};
+                for (var prop in signature) {
+                    if (signature.hasOwnProperty(prop)) {
+                        map[key][prop] = m.prop(signature[prop]());
+                    }
+                }
+            }
+            return map[key];
+        };
+    };
+
     // Contact model
     var Contact = function (data) {
         data = data || {};
@@ -87,6 +107,12 @@ module.exports = (function () {
         view: function (ctrl, args) {
             var contact = ctrl.contact();
 
+            var inputConfig = function (element, isInitialized) {
+                if (!isInitialized) {
+                    element.focus();
+                }
+            };
+
             return m('form', [
                 m('.form-group', [
                     m('label', 'Name'),
@@ -94,7 +120,8 @@ module.exports = (function () {
                         type: 'text',
                         placeholder: 'eg: George Raptis',
                         oninput: m.withAttr('value', contact.name),
-                        value: contact.name() || ''
+                        value: contact.name() || '',
+                        config: inputConfig
                     })
                 ]),
 
@@ -122,7 +149,9 @@ module.exports = (function () {
                 console.info('UPDATED');
             });
 
-            console.log(ps.topics);
+            this.contactsVM = viewModelMap({
+                isEditing: m.prop(false)
+            });
         },
         view: function (ctrl, args) {
             var fadesIn = function (element, isInitialized) {
@@ -140,15 +169,49 @@ module.exports = (function () {
                         m('tr', [
                             m('th', '#'),
                             m('th', 'Name'),
-                            m('th', 'Email')
+                            m('th', 'Email'),
+                            m('th', '')
                         ])
                     ]),
                     m('tbody', [
                         args.contacts().map(function (contact, idx) {
-                            return m('tr.contact-item', {key: contact.id, config: fadesIn}, [
+                            var vm = ctrl.contactsVM(contact.email);
+                            return m('tr.contact-item', {key: contact.email, config: fadesIn}, [
                                 m('th', ++idx),
-                                m('td', contact.name),
-                                m('td', contact.email)
+                                m('td', [
+                                    vm.isEditing() ?
+                                        m('input.form-control', {
+                                            value: contact.name
+                                        }) :
+                                        contact.name
+                                ]),
+
+                                m('td', [
+                                    vm.isEditing() ?
+                                        m('input.form-control', {
+                                            oninput: function (e) {
+                                                return m.withAttr('value', function (e) {
+                                                    console.log(e.target);
+                                                });
+                                            },
+                                            value: contact.email
+                                        }) :
+                                        contact.email
+                                ]),
+
+                                m('td', {style: 'text-align:center;'}, [
+                                    vm.isEditing() ?
+                                    m('a[href="javascript:void(0);"]', {
+                                        onclick: function () {
+                                            vm.isEditing(!vm.isEditing());
+                                        }
+                                    }, 'Save') :
+                                    m('a[href="javascript:void(0);"]', {
+                                        onclick: function () {
+                                            vm.isEditing(!vm.isEditing());
+                                        }
+                                    }, 'Edit')
+                                ])
                             ]);
                         })
                     ])

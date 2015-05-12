@@ -65,3 +65,8 @@ body[data-page-name="contacts"] .nav > li.contact a {
     pointer-events: none;
     cursor: default;
 }
+
+/* Custom */
+.contact-item {
+    @include transition(opacity 0.5s ease);
+}

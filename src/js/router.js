@@ -3,7 +3,7 @@
  * Provides routing to application enhanced with animations and
  * a router wrapper giving us the ability for custom acrtion when route changes.
  */
-module.exports = (function (doc, app) {
+module.exports = (function (doc) {
     'use strict';
 
     var animator = require('./utils/animator'),
@@ -17,7 +17,7 @@ module.exports = (function (doc, app) {
             function (myModule) {
                 return myModule;
             },
-        animationClass; // Holds the class responsible for animation. TODO: Maybe use publish/subscribe patter instead.
+        animationClass; // Holds the class responsible for animation.
 
     /**
      * Animates page in view.
@@ -122,4 +122,4 @@ module.exports = (function (doc, app) {
             });
         }
     };
-}(document, app));
+}(document));

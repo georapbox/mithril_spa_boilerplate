@@ -8,22 +8,22 @@
  * ------------------------
  */
 @include keyframes(slide-in-ltr) {
-	from {
+	0% {
 		opacity: 0;
 		@include transform(translateX(-100%));
 	}
-	to {
+	100% {
 		opacity: 1;
 		@include transform(translateX(0));
 	}
 }
 
 @include keyframes(slide-out-ltr) {
-	from {
+	0% {
 		opacity: 1;
 		@include transform(translateX(0));
 	}
-	to {
+	100% {
 		opacity: 0;
 		@include transform(translateX(100%));
 	}
@@ -43,22 +43,22 @@
  * ------------------------
  */
 @include keyframes(slide-in-rtl) {
-	from {
+	0% {
 		opacity: 0;
 		@include transform(translateX(100%));
 	}
-	to {
+	100% {
 		opacity: 1;
 		@include transform(translateX(0));
 	}
 }
 
 @include keyframes(slide-out-rtl) {
-	from {
+	0% {
 		opacity: 1;
 		@include transform(translateX(0));
 	}
-	to {
+	100% {
 		opacity: 0;
 		@include transform(translateX(-100%));
 	}
@@ -78,22 +78,22 @@
  * ------------------------
  */
 @include keyframes(slide-in-ttb) {
-	from {
+	0% {
 		opacity: 0;
 		@include transform(translateY(-100%));
 	}
-	to {
+	100% {
 		opacity: 1;
 		@include transform(translateY(0));
 	}
 }
 
 @include keyframes(slide-out-ttb) {
-	from {
+	0% {
 		opacity: 1;
 		@include transform(translateY(0));
 	}
-	to {
+	100% {
 		opacity: 0;
 		@include transform(translateY(100%));
 	}
@@ -113,22 +113,22 @@
  * ------------------------
  */
 @include keyframes(slide-in-btt) {
-	from {
+	0% {
 		opacity: 0;
 		@include transform(translateY(100%));
 	}
-	to {
+	100% {
 		opacity: 1;
 		@include transform(translateY(0));
 	}
 }
 
 @include keyframes(slide-out-btt) {
-	from {
+	0% {
 		opacity: 1;
 		@include transform(translateY(0));
 	}
-	to {
+	100% {
 		opacity: 0;
 		@include transform(translateY(-100%));
 	}
@@ -148,19 +148,19 @@
  * -----------
  */
 @include keyframes(fade-in) {
-	from {
+	0% {
 		opacity: 0;
 	}
-	to {
+	100% {
 		opacity: 1;
 	}
 }
 
 @include keyframes(fade-out) {
-	from {
+	0% {
 		opacity: 1;
 	}
-	to {
+	100% {
 		opacity: 0;
 	}
 }

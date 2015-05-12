@@ -1,30 +1,80 @@
 /**
- * Modal component.
- * @returns {object} The modal module.
+ * Mithril-Bootstrap-Modal
+ * A Mithril implementation of a Bootstrap 3 modal dialog.
+ * @version 0.0.1
+ * @homepage https://github.com/georapbox/Mithril-Bootstrap-Modal
+ * @author George Raptis (https://github.com/georapbox)
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 George Raptis
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
-module.exports = (function (win, doc) {
+(function (name, context, definition) {
+    'use strict';
+
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = definition();
+    } else if (typeof define === 'function' && define.amd) {
+        define(definition);
+    } else {
+        context[name] = definition();
+    }
+}('Modal', this, function () {
     'use strict';
 
     /**
-	 * Creates a modal instance.
-	 * @constructor
-	 */
+     * Creates a modal instance.
+     * @constructor
+     */
     function Modal() {
         var that = this;
-        var modalConfig = function (element) {
-            setTimeout(function () {
-                element.classList.add('fadein');
-            }, 50);
+        var modalConfig = function (element, isInitialized, context) {
+            if (!isInitialized) {
+                setTimeout(function () {
+                    element.classList.add('fadein');
+                }, 50);
 
-            element.addEventListener('click', hideModal, false);
+                var handleKey = function (e) {
+                    if (e.keyCode === 27) {
+                        m.startComputation();
+                        that.hide();
+                        m.endComputation();
+                    }
+                };
 
-            function hideModal(e) {
-                if (e.target.classList.contains('modal')) {
-                    element.removeEventListener('click', hideModal, false);
-                    m.startComputation();
-                    that.hide();
-                    m.endComputation();
-                }
+                var handleClickOutside =  function (e) {
+                    if (e.target.classList.contains('modal')) {
+                        m.startComputation();
+                        that.hide();
+                        m.endComputation();
+                    }
+                };
+
+                document.body.addEventListener('keyup', handleKey, false);
+                element.addEventListener('click', handleClickOutside, false);
+
+                context.onunload = function () {
+                    element.removeEventListener('click', handleClickOutside, false);
+                    document.body.removeEventListener('keyup', handleKey, false);
+                };
             }
         };
 
@@ -44,7 +94,7 @@ module.exports = (function (win, doc) {
                             opts.footer ? m('.modal-footer', opts.footer()) : ''
                         ])
                     ])
-            ]) : '';
+                ]) : '';
         };
     }
 
@@ -52,10 +102,12 @@ module.exports = (function (win, doc) {
 
     proto.show = function () {
         this.visible = m.prop(true);
+        document.body.classList.add('modal-open');
     };
 
     proto.hide = function () {
         this.visible = m.prop(false);
+        document.body.classList.remove('modal-open');
     };
 
     proto.isVisible = function () {
@@ -63,4 +115,4 @@ module.exports = (function (win, doc) {
     };
 
     return Modal;
-}(window, document));
+}));

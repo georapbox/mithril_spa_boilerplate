@@ -63,8 +63,6 @@ module.exports = (function () {
 			data: data
 		});*/
 
-        m.startComputation();
-
         var deferred = m.deferred();
 
         setTimeout(function () {
@@ -75,9 +73,7 @@ module.exports = (function () {
             };
 
             contactsData.push(newContact);
-
             deferred.resolve(newContact);
-            m.endComputation();
         }, 0);
 
         return deferred.promise;
@@ -106,7 +102,7 @@ module.exports = (function () {
                     m('label', 'Email'),
                     m('input.form-control', {
                         type: 'email',
-                        placeholder: 'eg: georapbox@giaml.com',
+                        placeholder: 'eg: georapbox@gmail.com',
                         oninput: m.withAttr('value', contact.email),
                         value: contact.email() || ''
                     })
@@ -129,6 +125,15 @@ module.exports = (function () {
             console.log(ps.topics);
         },
         view: function (ctrl, args) {
+            var fadesIn = function (element, isInitialized) {
+                if (!isInitialized) {
+                    element.style.opacity = 0;
+                    setTimeout(function () {
+                        element.style.opacity = 1;
+                    }, 50);
+                }
+            };
+
             return m('.table-responsive', [
                 m('table.table.table-bordered', [
                     m('thead', [
@@ -140,7 +145,7 @@ module.exports = (function () {
                     ]),
                     m('tbody', [
                         args.contacts().map(function (contact, idx) {
-                            return m('tr', {key: contact.id}, [
+                            return m('tr.contact-item', {key: contact.id, config: fadesIn}, [
                                 m('th', ++idx),
                                 m('td', contact.name),
                                 m('td', contact.email)
@@ -154,64 +159,53 @@ module.exports = (function () {
 
     // ContactsWidget component
     // Centralized module, responsible for interfacing with the model layer
-    var ContactsWidget = {
-        controller: function update () {
-            this.contacts = Contact.list();
+    var ContactsWidget = {};
 
-            this.save = function (contact) {
-                Contact.
+    ContactsWidget.controller = function update () {
+        this.contacts = Contact.list();
+
+        this.save = function (contact) {
+            Contact.
                 save(contact).
                 then(update.bind(this)).
                 then(newContactModal.hide());
 
-                ps.trigger('UPDATE_CONTACT');
-            }.bind(this);
+            ps.trigger('UPDATE_CONTACT');
+        }.bind(this);
 
-            this.onunload = function () {
-                console.log('ContactsWidget unloaded --> Unsubscribe form events');
-                ps.off('UPDATE_CONTACT');
-            };
-        },
-        view: function (ctrl) {
-            return m('div.m-page', [
-                m('h2', 'Contacts'),
+        this.onunload = function () {
+            console.log('ContactsWidget unloaded --> Unsubscribe form events');
+            ps.off('UPDATE_CONTACT');
+        };
+    };
 
-                m('p.pull-right', [
-                    m('a.btn.btn-primary', {
-                        onclick: newContactModal.show.bind(newContactModal)
-                    }, 'Add new contact')
-                ]),
+    ContactsWidget.view = function (ctrl) {
+        return m('div.m-page', [
+            m('h2', 'Contacts'),
 
-                m('.clear'),
+            m('p.pull-right', [
+                m('a.btn.btn-primary', {
+                    onclick: newContactModal.show.bind(newContactModal)
+                }, 'Add new contact')
+            ]),
 
-                /*newContactModal.view(function () {
-					return m('h4.modal-title', 'New contact');
-				}, function () {
-					return m.component(ContactForm, {
-						onsave: ctrl.save
-					});
-				}, function () {
-					return m('button.btn.btn-default', {
-						onclick: newContactModal2.show.bind(newContactModal2)
-					}, 'Another modal');
-				}),*/
+            m('.clear'),
 
-                newContactModal.view({
-                    header: function () {
-                        return m('h4.modal-title', 'New contact');
-                    },
-                    body: function () {
-                        return m.component(ContactForm, {
-                            onsave: ctrl.save
-                        });
-                    }
-                }),
+            newContactModal.view({
+                header: function () {
+                    return m('h4.modal-title', 'New contact');
+                },
+                body: function () {
+                    return m.component(ContactForm, {
+                        onsave: ctrl.save
+                    });
+                }
+            }),
 
-                m.component(ContactsList, {
-                    contacts: ctrl.contacts
-                })
-            ]);
-        }
+            m.component(ContactsList, {
+                contacts: ctrl.contacts
+            })
+        ]);
     };
 
     return ContactsWidget;

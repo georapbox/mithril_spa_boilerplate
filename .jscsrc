@@ -10,8 +10,6 @@
     ],
 	"validateIndentation": 4,
     "validateQuoteMarks": "'",
-	"requireSpaceBeforeBlockStatements": true,
-	"requireSpacesInForStatement": true,
 	"requireParenthesesAroundIIFE": true,
 	"requireLineFeedAtFileEnd": true,
 	"requireBlocksOnNewline": true,
@@ -20,7 +18,6 @@
 	"disallowSpaceAfterObjectKeys": true,
 	"requireSpaceBeforeObjectValues": true,
 	"requireCommaBeforeLineBreak": true,
-	"requireSpaceBeforeBinaryOperators": true,
 	"requireSpaceBeforeBinaryOperators": [
         "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=",
         "&=", "|=", "^=", "+=",
@@ -34,7 +31,12 @@
 	"requireDotNotation": true,
 	"disallowYodaConditions": true,
 	"disallowNewlineBeforeBlockStatements": true,
-	"requireSpacesInConditionalExpression": true,
+	"requireSpacesInConditionalExpression": {
+      "afterTest": true,
+      "beforeConsequent": true,
+      "afterConsequent": true,
+      "beforeAlternate": true
+    },
 	"requireSpacesInFunctionExpression": {
 		"beforeOpeningCurlyBrace": true
 	},

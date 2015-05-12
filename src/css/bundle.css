@@ -9042,6 +9042,15 @@ body[data-page-name="contacts"] .nav > li.contact a {
   cursor: default;
 }
 
+/* Custom */
+/* line 70, ../sass/styles.scss */
+.contact-item {
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+}
+
 /**
  * @package Animations
  * Define all page transitions types.
@@ -9051,38 +9060,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
  * ------------------------
  */
 @-moz-keyframes slide-in-ltr {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateX(-100%);
     transform: translateX(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateX(0);
     transform: translateX(0);
   }
 }
 @-webkit-keyframes slide-in-ltr {
-  from {
+  0% {
     opacity: 0;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
 }
 @keyframes slide-in-ltr {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -9091,38 +9100,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
   }
 }
 @-moz-keyframes slide-out-ltr {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateX(100%);
     transform: translateX(100%);
   }
 }
 @-webkit-keyframes slide-out-ltr {
-  from {
+  0% {
     opacity: 1;
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
   }
 }
 @keyframes slide-out-ltr {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateX(100%);
     -ms-transform: translateX(100%);
@@ -9148,38 +9157,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
  * ------------------------
  */
 @-moz-keyframes slide-in-rtl {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateX(100%);
     transform: translateX(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateX(0);
     transform: translateX(0);
   }
 }
 @-webkit-keyframes slide-in-rtl {
-  from {
+  0% {
     opacity: 0;
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
 }
 @keyframes slide-in-rtl {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateX(100%);
     -ms-transform: translateX(100%);
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -9188,38 +9197,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
   }
 }
 @-moz-keyframes slide-out-rtl {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateX(-100%);
     transform: translateX(-100%);
   }
 }
 @-webkit-keyframes slide-out-rtl {
-  from {
+  0% {
     opacity: 1;
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
 }
 @keyframes slide-out-rtl {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
@@ -9245,38 +9254,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
  * ------------------------
  */
 @-moz-keyframes slide-in-ttb {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateY(-100%);
     transform: translateY(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateY(0);
     transform: translateY(0);
   }
 }
 @-webkit-keyframes slide-in-ttb {
-  from {
+  0% {
     opacity: 0;
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 }
 @keyframes slide-in-ttb {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateY(-100%);
     -ms-transform: translateY(-100%);
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -9285,38 +9294,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
   }
 }
 @-moz-keyframes slide-out-ttb {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateY(100%);
     transform: translateY(100%);
   }
 }
 @-webkit-keyframes slide-out-ttb {
-  from {
+  0% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
   }
 }
 @keyframes slide-out-ttb {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateY(100%);
     -ms-transform: translateY(100%);
@@ -9342,38 +9351,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
  * ------------------------
  */
 @-moz-keyframes slide-in-btt {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateY(100%);
     transform: translateY(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateY(0);
     transform: translateY(0);
   }
 }
 @-webkit-keyframes slide-in-btt {
-  from {
+  0% {
     opacity: 0;
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 }
 @keyframes slide-in-btt {
-  from {
+  0% {
     opacity: 0;
     -moz-transform: translateY(100%);
     -ms-transform: translateY(100%);
     -webkit-transform: translateY(100%);
     transform: translateY(100%);
   }
-  to {
+  100% {
     opacity: 1;
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -9382,38 +9391,38 @@ body[data-page-name="contacts"] .nav > li.contact a {
   }
 }
 @-moz-keyframes slide-out-btt {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateY(-100%);
     transform: translateY(-100%);
   }
 }
 @-webkit-keyframes slide-out-btt {
-  from {
+  0% {
     opacity: 1;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%);
   }
 }
 @keyframes slide-out-btt {
-  from {
+  0% {
     opacity: 1;
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-  to {
+  100% {
     opacity: 0;
     -moz-transform: translateY(-100%);
     -ms-transform: translateY(-100%);
@@ -9439,50 +9448,50 @@ body[data-page-name="contacts"] .nav > li.contact a {
  * -----------
  */
 @-moz-keyframes fade-in {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  100% {
     opacity: 1;
   }
 }
 @-webkit-keyframes fade-in {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  100% {
     opacity: 1;
   }
 }
 @keyframes fade-in {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  100% {
     opacity: 1;
   }
 }
 @-moz-keyframes fade-out {
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+  100% {
     opacity: 0;
   }
 }
 @-webkit-keyframes fade-out {
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+  100% {
     opacity: 0;
   }
 }
 @keyframes fade-out {
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+  100% {
     opacity: 0;
   }
 }
